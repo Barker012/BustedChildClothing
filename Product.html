@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="description" content="View Busted Child product details, colors, sizes, pricing, and related streetwear pieces before adding to cart." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2b2119" />
+  <meta property="og:url" content="https://bustedchild.co.za/Product.html" />
+  <meta property="og:title" content="Busted Child · Product" />
+  <meta property="og:description" content="View Busted Child product details, colors, sizes, pricing, and related streetwear pieces before adding to cart." />
+  <meta property="og:image" content="https://bustedchild.co.za/LOGO.jpeg" />
+  <title>Busted Child · Product</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Montserrat:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="LOGO.jpeg" type="image/jpeg" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #fcf9f7; color: #1e1e1e; line-height: 1.5; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .site-header { background: #fff; padding: 0.8rem 2rem; border-bottom: 1px solid #eeeae5; display: flex; align-items: center; justify-content: space-between; gap: 1rem; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+    .header-left { display: flex; align-items: center; gap: 0.5rem; }
+    .hamburger { background: transparent; border: none; font-size: 1.8rem; padding: 0.3rem 0.6rem; cursor: pointer; color: #1e1e1e; border-radius: 8px; }
+    .hamburger:hover { background: #f0edea; }
+    .header-center { flex: 1; display: flex; justify-content: center; }
+    .logo-image { height: 65px; width: auto; max-width: 220px; object-fit: contain; }
+    .header-right { display: flex; align-items: center; gap: 0.1rem; }
+    .icon-btn { background: transparent; border: none; font-size: 1.4rem; padding: 0.5rem 0.6rem; border-radius: 30px; cursor: pointer; color: #1e1e1e; position: relative; }
+    .icon-btn:hover { background: #f0edea; }
+    .icon-btn .badge { position: absolute; top: 0; right: 0; background: #b33c3c; color: white; font-size: 0.6rem; font-weight: 700; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transform: translate(6px, -6px); border: 2px solid white; }
+    .icon-btn .badge-wishlist { top: -2px; right: -2px; font-size: 0.5rem; width: 16px; height: 16px; }
+
+    .mobile-menu { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: #fff; z-index: 2000; padding: 2rem 1.5rem; transition: left 0.3s ease; box-shadow: 2px 0 20px rgba(0,0,0,0.1); overflow-y: auto; }
+    .mobile-menu.open { left: 0; }
+    .mobile-menu .close-menu { background: none; border: none; font-size: 1.8rem; cursor: pointer; float: right; color: #1e1e1e; }
+    .mobile-menu nav a { display: block; padding: 0.8rem 0; color: #1e1e1e; font-weight: 500; border-bottom: 1px solid #f0edea; }
+    .mobile-menu nav a:hover { color: #b33c3c; }
+    .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1500; }
+    .menu-overlay.active { display: block; }
+
+    .nav-bar { background: #fff; padding: 0.6rem 2rem; border-bottom: 1px solid #eeeae5; display: flex; justify-content: center; flex-wrap: wrap; gap: 1.2rem 2rem; font-weight: 500; font-size: 0.95rem; }
+    .nav-bar a { color: #2c2c2c; transition: color 0.2s; }
+    .nav-bar a:hover { color: #b33c3c; }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 2rem; }
+    .breadcrumb { margin-bottom: 2rem; color: #6b6b6b; font-size: 0.9rem; }
+    .breadcrumb a { color: #b33c3c; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .product-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+    
+    /* Gallery with view toggle */
+    .product-gallery { position: relative; }
+    .product-gallery .main-image { width: 100%; border-radius: 24px; overflow: hidden; background: #f5f0eb; box-shadow: 0 8px 24px rgba(0,0,0,0.05); margin-bottom: 1rem; }
+    .product-gallery .main-image img { width: 100%; height: 500px; object-fit: cover; transition: opacity 0.3s ease; }
+    .view-toggle { display: flex; gap: 0.5rem; justify-content: center; }
+    .view-btn { padding: 0.5rem 1.5rem; border: 2px solid #d6cec7; border-radius: 30px; background: #fff; cursor: pointer; font-weight: 500; font-size: 0.85rem; transition: all 0.2s; font-family: inherit; }
+    .view-btn:hover { border-color: #b33c3c; }
+    .view-btn.active { background: #1e1e1e; color: #fff; border-color: #1e1e1e; }
+    .no-back-badge { text-align: center; padding: 1rem; color: #999; font-size: 0.9rem; }
+
+    .product-details h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .product-details .price { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+    .product-details .description { color: #6b6b6b; margin-bottom: 1.5rem; line-height: 1.6; }
+    .product-details .category-badge { display: inline-block; padding: 0.3rem 1rem; background: #f0edea; border-radius: 20px; font-size: 0.85rem; margin-bottom: 1rem; }
+
+    .color-section h3, .size-section h3 { font-weight: 600; margin-bottom: 0.8rem; }
+    .color-options { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .color-option { width: 50px; height: 50px; border-radius: 50%; border: 3px solid #ddd; cursor: pointer; transition: all 0.2s; position: relative; }
+    .color-option:hover { border-color: #b33c3c; transform: scale(1.1); }
+    .color-option.selected { border-color: #b33c3c; box-shadow: 0 0 0 3px rgba(179,60,60,0.2); }
+    .color-option.selected::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; font-size: 1.2rem; text-shadow: 0 0 3px rgba(0,0,0,0.5); }
+
+    .size-options { display: flex; gap: 0.8rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .size-option { padding: 0.7rem 1.5rem; border: 2px solid #d6cec7; border-radius: 30px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+    .size-option:hover { border-color: #b33c3c; }
+    .size-option.selected { background: #1e1e1e; color: #fff; border-color: #1e1e1e; }
+
+    .action-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .add-to-cart-btn { padding: 1rem 2rem; background: #1e1e1e; color: #fff; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+    .add-to-cart-btn:hover { background: #b33c3c; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(179,60,60,0.3); }
+    .wishlist-btn { padding: 1rem 2rem; background: transparent; color: #4a4a4a; border: 2px solid #d6cec7; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+    .wishlist-btn:hover { border-color: #b33c3c; color: #b33c3c; }
+    .wishlist-btn.active { background: #fce9e9; border-color: #b33c3c; color: #b33c3c; }
+
+    .similar-section { margin-top: 4rem; padding-top: 3rem; border-top: 1px solid #eee; }
+    .similar-section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 2rem; }
+    .similar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .similar-card { background: #fff; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #f0ebe6; }
+    .similar-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .similar-card img { width: 100%; height: 200px; object-fit: cover; }
+    .similar-card .info { padding: 0.8rem; }
+    .similar-card .info h4 { font-weight: 600; font-size: 0.9rem; }
+    .similar-card .info p { color: #6b6b6b; font-size: 0.85rem; }
+
+    .notification { position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%); background: #1e1e1e; color: #fff; padding: 0.8rem 2rem; border-radius: 50px; z-index: 9999; transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; gap: 0.5rem; }
+    .notification.show { bottom: 30px; }
+
+    .footer { background: #1e1e1e; color: #e0dbd6; padding: 3rem 2rem 1.5rem; margin-top: 3rem; border-radius: 32px 32px 0 0; }
+    .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 2rem; }
+    .footer h4 { color: #fff; font-weight: 600; margin-bottom: 1rem; }
+    .footer a { color: #cbc3bb; display: block; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .footer a:hover { color: #fff; }
+    .footer .logo-image-footer { height: 75px; width: auto; filter: brightness(1.1) drop-shadow(0 0 8px rgba(255,255,255,0.15)); margin-bottom: 0.8rem; object-fit: contain; }
+    .social-icons { display: flex; gap: 1rem; margin-top: 0.5rem; }
+    .social-icons a { font-size: 1.6rem; color: #cbc3bb; margin-bottom: 0; }
+    .social-icons a:hover { color: #fff; }
+    .footer-bottom { max-width: 1280px; margin: 2.5rem auto 0; padding-top: 1.5rem; border-top: 1px solid #3a3a3a; font-size: 0.85rem; color: #a09890; text-align: center; }
+
+    @media (max-width: 768px) {
+      .product-detail { grid-template-columns: 1fr; }
+      .product-gallery .main-image img { height: 350px; }
+      .similar-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-details h1 { font-size: 1.8rem; }
+      .product-details .price { font-size: 1.5rem; }
+    }
+  
+
+        .announcement-bar { background: var(--clay); color: var(--white); padding: 0.55rem 0; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.3px; overflow: hidden; position: relative; z-index: 1001; font-family: var(--font-mono); text-transform: uppercase; }
+    
+        .announcement-slider { display: flex; animation: slideAnnouncements 12s infinite; white-space: nowrap; }
+    
+        .announcement-item { flex: 0 0 100%; text-align: center; padding: 0 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+  
+    /* Launch consistency: shared home-page shell variables and navigation polish */
+    :root {
+      --clay: #2b2119;
+      --porcelain: #f4ede0;
+      --glaze: #b5502f;
+      --glaze-deep: #8c3a22;
+      --slip: #e5d8c4;
+      --border: #e5d8c4;
+      --accent: #b5502f;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    .announcement-bar { background: var(--clay); color: var(--porcelain); overflow: hidden; height: 38px; display: flex; align-items: center; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.4px; }
+    .announcement-slider { display: flex; gap: 3rem; white-space: nowrap; animation: slide 24s linear infinite; padding-left: 100%; }
+    .announcement-item { display: inline-flex; align-items: center; gap: 0.5rem; }
+    .nav-bar a.active { color: var(--glaze); font-weight: 700; }
+    @media (max-width: 768px) { .announcement-bar { height: 34px; font-size: 0.68rem; } .nav-bar { display: none; } }
+
+  </style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement-bar" role="marquee" aria-label="Announcements">
+  <div class="announcement-slider">
+    <div class="announcement-item"><i class="fas fa-truck"></i> FREE SHIPPING ON ORDERS OVER R500</div>
+    <div class="announcement-item"><i class="fas fa-fire"></i> NEW DROP LIVE - SHOP THE LATEST</div>
+    <div class="announcement-item"><i class="fas fa-tag"></i> 20% OFF YOUR FIRST ORDER - USE CODE: BUSTED20</div>
+  </div>
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" id="closeMenuBtn"><i class="fas fa-times"></i></button>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="NewArrivals.html">New Arrivals</a>
+    <a href="ShopApparel.html">Shop Apparel</a>
+    <a href="Kids.html">Kids</a>
+    <a href="Accessories.html">Accessories</a>
+    <a href="Sale.html">Sale</a>
+  </nav>
+</div>
+
+<header class="site-header">
+  <div class="header-left"><button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button></div>
+  <div class="header-center"><a href="index.html"><img class="logo-image" src="LOGO.jpeg" alt="Busted Child" /></a></div>
+  <div class="header-right">
+    <button class="icon-btn" id="wishlistOpenBtn"><i class="far fa-heart"></i><span class="badge badge-wishlist" id="wishlistBadge">0</span></button>
+    <button class="icon-btn" id="cartOpenBtn"><i class="fas fa-shopping-bag"></i><span class="badge" id="cartBadge">0</span></button>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <a href="index.html">Home</a>
+  <a href="NewArrivals.html">New Arrivals</a>
+  <a href="ShopApparel.html">Shop Apparel</a>
+  <a href="Kids.html">Kids</a>
+  <a href="Accessories.html">Accessories</a>
+  <a href="Sale.html">Sale</a>
+</nav>
+
+<div class="container">
+  <div class="breadcrumb"><a href="index.html">Home</a> / <span id="breadcrumbCat"></span> / <span id="breadcrumbName"></span></div>
+  
+  <div class="product-detail">
+    <div class="product-gallery">
+      <div class="main-image"><img id="mainImage" src="" alt="Product" /></div>
+      <div class="view-toggle" id="viewToggle">
+        <button class="view-btn active" data-view="front">Front View</button>
+        <button class="view-btn" data-view="back">Back View</button>
+      </div>
+    </div>
+    <div class="product-details">
+      <span class="category-badge" id="categoryBadge"></span>
+      <h1 id="productName"></h1>
+      <div class="price" id="productPrice"></div>
+      <p class="description" id="productDescription">Premium quality streetwear from Busted Child.</p>
+      
+      <div class="color-section">
+        <h3>Color: <span id="selectedColorName" style="font-weight: 400;">Select a color</span></h3>
+        <div class="color-options" id="colorOptions"></div>
+      </div>
+      
+      <div class="size-section">
+        <h3>Size</h3>
+        <div class="size-options" id="sizeOptions"></div>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="add-to-cart-btn" id="addToCartBtn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+        <button class="wishlist-btn" id="wishlistToggleBtn"><i class="far fa-heart"></i> Wishlist</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="similar-section">
+    <h2>Similar Products</h2>
+    <div class="similar-grid" id="similarGrid"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div><img class="logo-image-footer" src="TC BC.jpeg" alt="Busted Child" /><div class="social-icons"><a href="https://tiktok.com/@bustedchild" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a><a href="https://facebook.com/bustedchild" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a><a href="https://instagram.com/bustedchild" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></div></div>
+    <div><h4>Shop</h4><a href="index.html">Home</a><a href="NewArrivals.html">New Arrivals</a><a href="ShopApparel.html">Shop Apparel</a><a href="Kids.html">Kids</a><a href="Accessories.html">Accessories</a><a href="Sale.html">Sale</a></div>
+    <div><h4>Company</h4><a href="index.html#main-content">About</a><a href="mailto:bustedchildclothingza@gmail.com">Contact</a><a href="mailto:bustedchildclothingza@gmail.com?subject=Privacy%20Policy">Privacy Policy</a><a href="mailto:bustedchildclothingza@gmail.com?subject=Terms%20of%20Service">Terms of Service</a></div>
+    <div><h4>Contact</h4>343 Peter Mokaba Street, Lotus Gardens<br>Pretoria West<br>063 252 4838<br>bustedchildclothingza@gmail.com</div>
+  </div>
+  <div class="footer-bottom">&copy; 2025 BUSTED CHILD CLOTHING. All rights reserved.</div>
+</footer>
+
+<div class="notification" id="notification"><i class="fas fa-check"></i><span id="notificationText"></span></div>
+
+<script>
+(function() {
+  // ===== ALL 25 PRODUCTS DATABASE =====
+  const allProducts = [
+    // SHIRTS (8 products) - have front and back views
+    { id: 1, name: "Busted Child To The WORLD Tee", price: 450.00, category: "shirts", image: "BC TO WRLD_Front.png", backImage: "BC TO WRLD_Back.png", colors: [{name:"White", hex:"White", image:"BC TO WRLD_Front.png", backImage:"BC TO WRLD_Back.png"}], sizes: ["S","M","L","XL"], description: "Bold statement tee representing Busted Child worldwide. Heavyweight cotton with front and back prints." },
+    { id: 2, name: "UBC Unisex Tee", price: 450.00, category: "shirts", image: "UBC TEE_BlackFront.png", backImage: "UBC TEE_BlackBack.png", colors: [{name:"Black", hex:"#1a1a1a", image:"UBC TEE_BlackFront.png", backImage:"UBC TEE_BlackBack.png"}, {name:"White", hex:"White", image:"UBC TEE_WhiteFront.jpeg", backImage:"UBC TEE_WhiteBack.jpeg"}], sizes: ["S","M","L","XL"], description: "The classic BC logo tee. Minimal front branding with bold back graphic." },
+    { id: 3, name: "University of BC Tee", price: 500.00, category: "shirts", image: "UniBC 1.0 BlackFront.jpeg", backImage: "UniBC 1.0  BlackBack.jpeg", colors: [{name:"Black", hex:"Black", image:"UniBC 1.0 BlackFront.jpeg", backImage:"UniBC 1.0  BlackBack.jpeg"}, {name:"White", hex:"White", image:"UniBC 1.0  WhiteFront.jpeg", backImage:"UniBC 1.0 WhiteBack.jpeg"}], sizes: ["S","M","L","XL"], description: "Varsity-inspired stripe tee. Pre-washed for a vintage look with back number detail." },
+    { id: 4, name: "All Dawgs Go To Heaven Tee", price: 450.00, category: "shirts", image: "All Dawgs Tee WhiteFront.png", backImage: "ALL Dawgs Tee WhiteBack.png", colors: [{name:"White", hex:"#f5f5f5", image:"All Dawgs Tee WhiteFront.png", backImage:"ALL Dawgs Tee WhiteBack.png"}], sizes: ["S","M","L","XL"], description: "Artistic graffiti-style print tee. Full front graphic with subtle back branding." },
+    { id: 5, name: "No Hood Like ChildHood Tee", price: 400.00, category: "shirts", image: "NoHood BlackFront.png", backImage: "NoHood BlackBack.png", colors: [{name:"Black", hex:"#1a1a1a", image:"NoHood BlackFront.png", backImage:"NoHood BlackBack.png"}, {name:"White", hex:"White", image:"NoHood WhiteFront.png", backImage:"NoHood WhiteFront.png"}], sizes: ["S","M","L","XL"], description: "Edgy skeleton graphic tee. Front skeletal print with spine detail on back." },
+    { id: 6, name: "Daily Times 'Ku Lavheka Mali' Tee", price: 500.00, category: "shirts", image: "DailyTimes BlackFront.png", backImage: "DailyTimes BlackFront.png", colors: [{name:"Black", hex:"Black", image:"DailyTimes BlackFront.png", backImage:"DailyTimes BlackBack.png"}, {name:"Black", hex:"#1a1a1a", image:"DailyTimes BlackFront.png", backImage:"DailyTimes BlackBack.png"}, {name:"Olive", hex:"#556b2f", image:"DailyTimes BlackFront.png", backImage:"DailyTimes BlackBack.png"}], sizes: ["S","M","L","XL"], description: "The everyday essential. Clean design with small front logo and larger back print." },
+    { id: 7, name: "CAUTION Unisex Tee", price: 450.00, category: "shirts", image: "Caution WhiteFront.png", backImage: "Caution WhiteBack.png", colors: [{name:"White", hex:"White", image:"Caution WhiteFront.png", backImage:"Caution WhiteBack.png"}], sizes: ["S","M","L","XL"], description: "Retro-inspired wave design. Front wave graphic with sunset back print." },
+    { id: 8, name: "Ghost Town Tee", price: 400.00, category: "shirts", image: "Ghost Town Black.png", colors: [{name:"Black", hex:"#1a1a1a", image:"Ghost Town Black.png"}, {name:"Red", hex:"#8b0000", image:"Ghost Town Red.png"},{name:"White", hex:"White", image:"Ghost Town White.png"}], sizes: ["S","M","L","XL"], description: "Bold streetwear logo tee. Oversized front branding with back detail." },
+
+    // HOODIES (5 products) - have front and back views
+    { id: 9, name: "3D Puffed Hoodie", price: 650.00, category: "hoodies", image: "BC Earth.png", backImage: "BC EarthBack.jpeg", colors: [{name:"Black", hex:"Black", image:"BC Earth.png", backImage:"BC EarthBack.jpeg"}], sizes: ["S","M","L","XL"], description: "Earth-toned premium hoodie. Soft fleece lining with front and back branding." },
+    { id: 10, name: "UBC Unisex Hoodie", price: 650.00, category: "hoodies", image: "UBC HoodieFront.png", backImage: "UBC HoodieBack.png", colors: [{name:"White", hex:"white", image:"UBC HoodieFront.png", backImage:"UBC HoodieBack.png"}], sizes: ["S","M","L","XL"], description: "Varsity arch logo hoodie. Front university-style arch with back establishment year." },
+    { id: 11, name: "Tennis Club Hoodie", price: 450.00, category: "hoodies", image: "TennisClub Front.png", backImage: "TennisClub Back.png", colors: [{name:"Black", hex:"#1a1a1a", image:"TennisClub Front.png", backImage:"TennisClub Back.png"}], sizes: ["S","M","L","XL"], description: "Full-zip essential hoodie. Front zip with split branding on front and back." },
+    { id: 12, name: "All Dawgs Go To Heaven Hoodie", price: 650.00, category: "hoodies", image: "All Dawgs HoodieFront.png", backImage: "All Dawgs HoodieBack.png", colors: [{name:"White", hex:"White", image:"All Dawgs HoodieFront.png", backImage:"All Dawgs HoodieBack.png"}], sizes: ["S","M","L","XL"], description: "Bold graphic hoodie. Large front print with matching back design." },
+    { id: 13, name: "Happy Pill Glow Hoodie", price: 650.00, category: "hoodies", image: "HappyPill HoodieFront.png", backImage: "HappyPill HoodieBack.png", colors: [{name:"White", hex:"white", image:"HappyPill HoodieFront.png", backImage:"HappyPill HoodieBack.png"}], sizes: ["S","M","L","XL"], description: "Super soft oversized hoodie. Cloud-like comfort with subtle front and back prints." },
+
+    // SWEATERS (3 products) - have front and back views
+    { id: 14, name: "Caution Unisex Sweater", price: 520.00, category: "sweaters", image: "Caution SweaterFront.png", backImage: "Caution SweaterBack.png", colors: [{name:"White", hex:"white", image:"Caution SweaterFront.png", backImage:"Caution SweaterBack.png"}], sizes: ["M","L","XL"], description: "Premium knit crewneck. Ribbed cuffs and hem with front and back minimal branding." },
+    { id: 15, name: "3D Unisex Sweater", price: 400.00, category: "sweaters", image: "Busted Sweater.jpeg", colors: [{name:"Grey", hex:"grey", image:"Busted Sweater.jpeg"}, ], sizes: ["S","M","L","XL"], description: "Classy quarter-zip sweater. Front zip detail with clean back branding." },
+    { id: 16, name: "All Dawgs Go To Heaven Sweater", price: 500, category: "sweaters", image: "All Dawgs SweaterFront.png", backImage: "All Dawgs SweaterBack.png", colors: [{name:"White", hex:"White", image:"All Dawgs SweaterFront.png", backImage:"All Dawgs SweaterBack.png"}], sizes: ["S","M","L","XL"], description: "Heavy cable knit sweater. Traditional pattern with modern front and back logo details." },
+
+    // PANTS (4 products) - no back view needed
+    { id: 17, name: "3D Puffed Trouser", price: 450, category: "pants", image: "Earth Sweatpants.jpeg", colors: [{name:"Black", hex:"#1a1a1a", image:"Earth Sweatpants.jpeg"}], sizes: ["S","M","L","XL"], description: "Unique 3D puffed design trousers. Relaxed fit with statement silhouette." },
+    { id: 18, name: "GHOST TOWN SweatPants", price: 450, category: "pants", image: "BC SweatPants.jpg", colors: [{name:"Khaki", hex:"#c9b8a8", image:"BC SweatPants.jpg"}, {name:"Stone", hex:"#a7927e", image:"BC SweatPants.jpg"}], sizes: ["S","M","L","XL"], description: "Comfortable sweatpants with skeleton detailing down the legs." },
+    { id: 19, name: "BASKETBALL SweatPants", price: 450, category: "pants", image: "BASKETBALL SWEAT.jpeg", colors: [{name:"Khaki", hex:"#c9b8a8", image:"BASKETBALL SWEAT.jpeg"}, {name:"Stone", hex:"#a7927e", image:"BC SweatPants.jpg"}], sizes: ["S","M","L","XL"], description: "Comfortable sweatpants with skeleton detailing down the legs." },
+    { id: 20, name: "BASKETBALL CLUB SweatPants", price: 350, category: "pants", image: "BSK CLUB.png", colors: [{name:"White", hex:"White", image:"BSK CLUB.png"}, {name:"Stone", hex:"#a7927e", image:"BC SweatPants.jpg"}], sizes: ["S","M","L","XL"], description: "Comfortable sweatpants with skeleton detailing down the legs." },
+    
+     // ACCESSORIES (3 products) - no back view needed
+    { id: 21, name: "Happy Pill Trucker Cap", price: 200, category: "accessories", image: "BC LickCap.jpeg", colors: [{name:"Black", hex:"black", image:"BC LickCap.jpeg"}, {name:"Charcoal", hex:"#736257", image:"BC LickCap.jpeg"}], sizes: ["One size"], description: "Classic trucker cap with mesh back. Adjustable snap closure with embroidered logo." },
+      { id: 22, name: "Busted Child Trucker Cap", price: 200, category: "accessories", image: "BC Cap.jpg", colors: [{name:"Black", hex:"black", image:"BC Cap.jpg"}, {name:"Charcoal", hex:"#736257", image:"BC Cap.jpg"}], sizes: ["One size"], description: "Classic trucker cap with mesh back. Adjustable snap closure with embroidered logo." },
+    { id: 23, name: "Busted Child Beanie", price: 180, category: "accessories", image: "BC Beanie.jpg", colors: [{name:"Blue", hex:"blue", image:"BC Beanie.jpg"}, {name:"Hazel", hex:"#a58d7b", image:"BC Beanie.jpg"}], sizes: ["One size"], description: "Warm knit beanie with ribbed cuff and woven BC label." },
+    { id: 24, name: "Certified Lovers Beanie", price: 250, category: "accessories", image: "BC Beanie2 black.jpeg", colors: [{name:"black", hex:"black", image:"BC Beanie2 black.jpeg"},{name:"Red", hex:"red", image:"BC Beanie2 red.jpeg"}, {name:"Grey", hex:"Grey", image:"BC beanie2.jpeg"}], sizes: ["One size"], description: "Heavy-duty canvas tote with large BC print. Perfect for everyday carry." },
+    { id: 25, name: "BUSTED GROVE Beanie", price: 200, category: "accessories", image: "BC Grove Black.png", colors: [{name:"Black", hex:"black", image:"BC Grove Black.png"}, {name:"White", hex:"white", image:"BC Grove White.png"}], sizes: ["One size"], description: "Classic trucker cap with mesh back. Adjustable snap closure with embroidered logo." },
+    
+    // KIDS (2 products) - no back view needed
+    { id: 26, name: "Mini BC Kids Set", price: 490, category: "kids", image: "Kids Set.jpg", colors: [{name:"Cocoa", hex:"#8b7867", image:"Kids Set.jpg"}, {name:"Black", hex:"#1a1a1a", image:"Kids Set.jpg"}], sizes: ["S","M","L","XL"], description: "Complete kids outfit set. Matching top and bottom with mini BC branding." }
+  ];
+
+  // Categories that support front/back views
+  const backViewCategories = ["shirts", "hoodies", "sweaters"];
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = parseInt(urlParams.get('id'));
+  const product = allProducts.find(p => p.id === productId) || allProducts[0];
+  
+  let selectedColor = product.colors[0];
+  let selectedSize = product.sizes[0];
+  let currentView = 'front'; // 'front' or 'back'
+  let cart = JSON.parse(localStorage.getItem('bustedCart')) || [];
+  let wishlist = JSON.parse(localStorage.getItem('bustedWishlist')) || [];
+
+  const hasBackView = backViewCategories.includes(product.category) && selectedColor.backImage;
+
+  // ===== UPDATE IMAGE BASED ON VIEW =====
+  function updateMainImage() {
+    if (currentView === 'back' && hasBackView) {
+      document.getElementById('mainImage').src = selectedColor.backImage;
+    } else {
+      document.getElementById('mainImage').src = selectedColor.image;
+    }
+  }
+
+  // ===== UPDATE UI =====
+  updateMainImage();
+  document.getElementById('productName').textContent = product.name;
+  document.getElementById('productPrice').textContent = 'R' + product.price;
+  document.getElementById('breadcrumbCat').textContent = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+  document.getElementById('breadcrumbName').textContent = product.name;
+  document.getElementById('categoryBadge').textContent = product.category.toUpperCase();
+  document.getElementById('productDescription').textContent = product.description;
+  document.title = 'Busted Child · ' + product.name;
+  document.getElementById('selectedColorName').textContent = selectedColor.name;
+
+  // Show/hide view toggle based on whether product has back view
+  const viewToggle = document.getElementById('viewToggle');
+  if (!hasBackView) {
+    viewToggle.innerHTML = '<span class="no-back-badge">Front view only</span>';
+  }
+
+  updateWishlistButton();
+
+  // ===== VIEW TOGGLE BUTTONS =====
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!hasBackView) return;
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentView = btn.dataset.view;
+      updateMainImage();
+    });
+  });
+
+  // ===== RENDER COLOR OPTIONS =====
+  const colorOptions = document.getElementById('colorOptions');
+  product.colors.forEach(color => {
+    const div = document.createElement('div');
+    div.className = 'color-option' + (color.hex === selectedColor.hex ? ' selected' : '');
+    div.style.background = color.hex;
+    div.title = color.name;
+    div.addEventListener('click', () => {
+      document.querySelectorAll('.color-option').forEach(c => c.classList.remove('selected'));
+      div.classList.add('selected');
+      selectedColor = color;
+      currentView = 'front';
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.view-btn[data-view="front"]')?.classList.add('active');
+      updateMainImage();
+      document.getElementById('selectedColorName').textContent = color.name;
+      
+      // Update view toggle visibility for new color
+      const newHasBack = backViewCategories.includes(product.category) && color.backImage;
+      if (newHasBack) {
+        document.getElementById('viewToggle').innerHTML = `
+          <button class="view-btn active" data-view="front">Front View</button>
+          <button class="view-btn" data-view="back">Back View</button>
+        `;
+        document.querySelectorAll('.view-btn').forEach(b => {
+          b.addEventListener('click', () => {
+            document.querySelectorAll('.view-btn').forEach(b2 => b2.classList.remove('active'));
+            b.classList.add('active');
+            currentView = b.dataset.view;
+            updateMainImage();
+          });
+        });
+      } else {
+        document.getElementById('viewToggle').innerHTML = '<span class="no-back-badge">Front view only</span>';
+      }
+    });
+    colorOptions.appendChild(div);
+  });
+
+  // ===== RENDER SIZE OPTIONS =====
+  const sizeOptions = document.getElementById('sizeOptions');
+  product.sizes.forEach(size => {
+    const span = document.createElement('span');
+    span.className = 'size-option' + (size === selectedSize ? ' selected' : '');
+    span.textContent = size;
+    span.addEventListener('click', () => {
+      document.querySelectorAll('.size-option').forEach(s => s.classList.remove('selected'));
+      span.classList.add('selected');
+      selectedSize = size;
+    });
+    sizeOptions.appendChild(span);
+  });
+
+  // ===== ADD TO CART =====
+  document.getElementById('addToCartBtn').addEventListener('click', () => {
+    const existing = cart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor.name);
+    if (existing) { 
+      existing.qty += 1; 
+    } else { 
+      cart.push({ 
+        id: product.id, name: product.name, price: product.price, 
+        image: selectedColor.image, size: selectedSize, color: selectedColor.name, qty: 1 
+      }); 
+    }
+    localStorage.setItem('bustedCart', JSON.stringify(cart));
+    updateCartBadge();
+    showNotification('Added to cart! 🛒');
+  });
+
+  // ===== WISHLIST TOGGLE =====
+  document.getElementById('wishlistToggleBtn').addEventListener('click', () => {
+    const idx = wishlist.findIndex(item => item.id === product.id);
+    if (idx > -1) {
+      wishlist.splice(idx, 1);
+      showNotification('Removed from wishlist 💔');
+    } else {
+      wishlist.push({ id: product.id, name: product.name, price: product.price, image: product.image });
+      showNotification('Added to wishlist! ❤️');
+    }
+    localStorage.setItem('bustedWishlist', JSON.stringify(wishlist));
+    updateWishlistButton();
+  });
+
+  function updateWishlistButton() {
+    const btn = document.getElementById('wishlistToggleBtn');
+    const inWishlist = wishlist.some(item => item.id === product.id);
+    btn.innerHTML = inWishlist ? '<i class="fas fa-heart"></i> Wishlisted' : '<i class="far fa-heart"></i> Wishlist';
+    btn.classList.toggle('active', inWishlist);
+  }
+
+  // ===== SIMILAR PRODUCTS =====
+  const similar = allProducts.filter(p => p.category === product.category && p.id !== product.id);
+  const similarGrid = document.getElementById('similarGrid');
+  if (similar.length === 0) {
+    similarGrid.innerHTML = '<p style="color:#6b6b6b;">No similar products found.</p>';
+  } else {
+    similar.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'similar-card';
+      card.innerHTML = `<img src="${p.image}" alt="${p.name}" /><div class="info"><h4>${p.name}</h4><p>R${p.price}</p></div>`;
+      card.addEventListener('click', () => { window.location.href = `Product.html?id=${p.id}`; });
+      similarGrid.appendChild(card);
+    });
+  }
+
+  function updateCartBadge() {
+    document.getElementById('cartBadge').textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+  }
+
+  // ===== MOBILE MENU =====
+  document.getElementById('hamburgerBtn').addEventListener('click', () => { 
+    document.getElementById('mobileMenu').classList.add('open'); 
+    document.getElementById('menuOverlay').classList.add('active'); 
+  });
+  document.getElementById('closeMenuBtn').addEventListener('click', () => { 
+    document.getElementById('mobileMenu').classList.remove('open'); 
+    document.getElementById('menuOverlay').classList.remove('active'); 
+  });
+  document.getElementById('menuOverlay').addEventListener('click', () => { 
+    document.getElementById('mobileMenu').classList.remove('open'); 
+    document.getElementById('menuOverlay').classList.remove('active'); 
+  });
+
+  function showNotification(message) {
+    const n = document.getElementById('notification');
+    document.getElementById('notificationText').textContent = message;
+    n.classList.add('show');
+    setTimeout(() => n.classList.remove('show'), 2500);
+  }
+
+  updateCartBadge();
+  document.getElementById('wishlistBadge').textContent = wishlist.length;
+})();
+</script>
+</body>
+</html>

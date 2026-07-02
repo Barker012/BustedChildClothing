@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify Account · Busted Child</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="verify-page">
+    <section class="verify-card">
+      <h1>Verify your account</h1>
+      <p>Enter the code we sent to your email and choose a password to finish creating your account.</p>
+      <form id="verifyForm">
+        <label for="verifyEmail">Email address</label>
+        <input type="email" id="verifyEmail" required placeholder="you@example.com" />
+        <label for="verifyOtp">Verification code</label>
+        <input type="text" id="verifyOtp" required placeholder="123456" maxlength="6" />
+        <label for="verifyPassword">Password</label>
+        <input type="password" id="verifyPassword" required placeholder="Create a password" />
+        <button type="submit" id="verifySubmit">Verify account</button>
+        <button type="button" id="resendOtp" class="secondary">Resend code</button>
+        <div id="verifyMessage" class="auth-error" style="display:none;"></div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('verifyForm');
+    const emailInput = document.getElementById('verifyEmail');
+    const otpInput = document.getElementById('verifyOtp');
+    const passwordInput = document.getElementById('verifyPassword');
+    const messageEl = document.getElementById('verifyMessage');
+    const resendBtn = document.getElementById('resendOtp');
+    const pendingEmail = localStorage.getItem('pendingVerificationEmail');
+
+    if (pendingEmail) {
+      emailInput.value = pendingEmail;
+    }
+
+    function showMessage(text, success = false) {
+      messageEl.textContent = text;
+      messageEl.style.display = 'block';
+      messageEl.style.color = success ? '#5c7a52' : '#b5502f';
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      messageEl.style.display = 'none';
+
+      const email = emailInput.value.trim();
+      const otp = otpInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!email || !otp || !password) {
+        showMessage('Please fill out every field.');
+        return;
+      }
+
+      const response = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp, password })
+      });
+
+      let result = {};
+      const text = await response.text();
+      try {
+        result = text ? JSON.parse(text) : {};
+      } catch (parseError) {
+        console.warn('Non-JSON response from verify-otp:', text);
+        result.message = 'Unexpected server response.';
+      }
+
+      if (response.ok) {
+        showMessage(result.message || 'Account verified successfully!', true);
+        localStorage.removeItem('pendingVerificationEmail');
+        setTimeout(() => window.location.href = 'index.html', 2000);
+      } else {
+        showMessage(result.message || 'Verification failed.');
+      }
+    });
+
+    resendBtn.addEventListener('click', async () => {
+      messageEl.style.display = 'none';
+      const email = emailInput.value.trim();
+      if (!email) {
+        showMessage('Please enter your email to resend the code.');
+        return;
+      }
+      resendBtn.disabled = true;
+      resendBtn.textContent = 'Sending...';
+      const response = await fetch('/api/auth/resend-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      let result = {};
+      const text = await response.text();
+      try {
+        result = text ? JSON.parse(text) : {};
+      } catch (parseError) {
+        console.warn('Non-JSON response from resend-otp:', text);
+        result.message = 'Unexpected server response.';
+      }
+      if (response.ok) {
+        showMessage(result.message || 'OTP resent!', true);
+      } else {
+        showMessage(result.message || 'Failed to resend OTP.');
+      }
+      resendBtn.disabled = false;
+      resendBtn.textContent = 'Resend code';
+    });
+  </script>
+</body>
+</html>

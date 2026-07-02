@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <!-- Primary Meta Tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Fresh drops from Busted Child. Be the first to cop the latest streetwear styles. New arrivals in shirts, hoodies, pants, and accessories. Shop the newest collection now." />
+  <meta name="keywords" content="new arrivals, latest streetwear, Busted Child new collection, fresh drops, South African fashion" />
+  <meta name="author" content="Busted Child Clothing" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#2b2119" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bustedchild.co.za/NewArrivals.html" />
+  <meta property="og:title" content="New Arrivals · Busted Child Clothing" />
+  <meta property="og:description" content="Fresh drops from Busted Child. Be the first to cop the latest streetwear styles." />
+  <meta property="og:image" content="https://bustedchild.co.za/og-image.jpg" />
+  <meta property="og:site_name" content="Busted Child Clothing" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="New Arrivals · Busted Child Clothing" />
+  <meta name="twitter:description" content="Fresh drops from Busted Child. Be the first to cop the latest streetwear styles." />
+
+  <title>New Arrivals · Busted Child</title>
+
+  <!-- Preload Critical Assets -->
+  <link rel="preload" href="LOGO.jpeg" as="image" />
+  <link rel="preload" href="HeroSec.jpeg" as="image" />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="LOGO.jpeg" type="image/jpeg" />
+  <link rel="apple-touch-icon" href="LOGO.jpeg" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* ===== Ceramic palette — matches the site design system ===== */
+      --clay: #2b2119;
+      --porcelain: #f4ede0;
+      --glaze: #b5502f;
+      --glaze-deep: #8c3a22;
+      --slip: #e5d8c4;
+      --white: #fffbf4;
+      --bg: var(--porcelain);
+      --primary: var(--clay);
+      --accent: var(--glaze);
+      --text: #2b2119;
+      --text-muted: #8a7a68;
+      --border: var(--slip);
+      --success: #5c7a52;
+      --shadow-sm: 0 2px 10px rgba(43,33,25,0.05);
+      --shadow-md: 0 10px 28px rgba(43,33,25,0.10);
+      --shadow-lg: 0 20px 44px rgba(43,33,25,0.16);
+      --radius-sm: 16px 18px 16px 20px;
+      --radius-md: 22px 26px 20px 28px;
+      --radius-lg: 30px 40px 30px 44px;
+      --transition: 0.2s ease;
+      --font-display: 'Fraunces', serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      background: var(--clay);
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      z-index: 10000;
+      transition: top 0.2s;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .skip-link:focus { top: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 8% 12%, rgba(181,80,47,0.06) 0%, transparent 45%),
+        radial-gradient(circle at 92% 85%, rgba(43,33,25,0.05) 0%, transparent 40%);
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* Cookie Banner */
+    .cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--clay);
+      color: var(--white);
+      padding: 1rem 2rem;
+      z-index: 9999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      font-family: var(--font-mono);
+    }
+    .cookie-banner.active { transform: translateY(0); }
+    .cookie-banner p { font-size: 0.85rem; flex: 1; min-width: 200px; font-family: var(--font-body); }
+    .cookie-banner .cookie-btns { display: flex; gap: 0.5rem; }
+    .cookie-banner button {
+      padding: 0.5rem 1.4rem;
+      border: 2px solid var(--white);
+      background: transparent;
+      color: var(--white);
+      border-radius: 22px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.8rem;
+      transition: var(--transition);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+    .cookie-banner .cookie-accept {
+      background: var(--glaze);
+      border-color: var(--glaze);
+    }
+    .cookie-banner button:hover {
+      background: var(--white);
+      color: var(--clay);
+    }
+
+    /* Header */
+    .site-header {
+      background: var(--white);
+      padding: 0.8rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-left { display: flex; align-items: center; gap: 0.5rem; }
+    .hamburger {
+      background: transparent;
+      border: none;
+      font-size: 1.6rem;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      color: var(--text);
+      border-radius: 8px;
+      transition: background 0.2s;
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .hamburger:hover { background: var(--porcelain); }
+    .header-center { flex: 1; display: flex; justify-content: center; }
+    .logo-image { height: 60px; width: auto; max-width: 220px; object-fit: contain; border-radius: 8px; }
+    .header-right { display: flex; align-items: center; gap: 0.1rem; }
+    .icon-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.3rem;
+      padding: 0.5rem 0.6rem;
+      border-radius: 30px;
+      cursor: pointer;
+      color: var(--text);
+      transition: background 0.2s;
+      position: relative;
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .icon-btn:hover { background: var(--porcelain); }
+    .icon-btn .badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--glaze);
+      color: var(--white);
+      font-size: 0.6rem;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transform: translate(6px, -6px);
+      border: 2px solid var(--white);
+      font-family: var(--font-mono);
+    }
+    .icon-btn .badge-wishlist {
+      background: var(--glaze);
+      top: -2px;
+      right: -2px;
+      font-size: 0.5rem;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 280px;
+      height: 100%;
+      background: var(--white);
+      z-index: 2000;
+      padding: 2rem 1.5rem;
+      transition: left 0.3s ease;
+      box-shadow: 2px 0 20px rgba(43,33,25,0.15);
+      overflow-y: auto;
+    }
+    .mobile-menu.open { left: 0; }
+    .mobile-menu .close-menu {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      float: right;
+      color: var(--text);
+    }
+    .mobile-menu .user-section {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+    .mobile-menu .user-section .user-name { font-weight: 600; font-size: 1.05rem; font-family: var(--font-display); }
+    .mobile-menu .user-section .user-email { font-size: 0.82rem; color: var(--text-muted); font-family: var(--font-mono); }
+    .mobile-menu .user-section .auth-btns {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .mobile-menu .user-section .auth-btns button {
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--slip);
+      border-radius: 20px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+      font-family: var(--font-mono);
+    }
+    .mobile-menu .user-section .auth-btns button:hover {
+      background: var(--clay);
+      color: var(--white);
+      border-color: var(--clay);
+    }
+    .mobile-menu nav a {
+      display: block;
+      padding: 0.8rem 0;
+      color: var(--text);
+      font-weight: 500;
+      font-family: var(--font-display);
+      font-size: 1.02rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu nav a:hover { color: var(--glaze); }
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(43,33,25,0.4);
+      z-index: 1500;
+    }
+    .menu-overlay.active { display: block; }
+
+    /* Navigation */
+    .nav-bar {
+      background: var(--porcelain);
+      padding: 0.65rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.4rem 2.2rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .nav-bar a {
+      color: #4a3f34;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-bar a:hover { color: var(--glaze); }
+    .nav-bar a.active { color: var(--glaze); font-weight: 600; }
+    .nav-bar a.active::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background: var(--glaze); border-radius: 50%; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      padding: 5.5rem 2rem 6.5rem;
+      min-height: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin-bottom: 2.5rem;
+      background-image: url('HeroSec.jpeg');
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(43,33,25,0.35) 0%, rgba(43,33,25,0.72) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: var(--white);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+      text-align: center;
+      max-width: 700px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 4.6rem;
+      letter-spacing: -1.5px;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .hero .tagline {
+      font-family: var(--font-mono);
+      font-weight: 400;
+      font-size: 0.95rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      opacity: 0.9;
+      color: #e8b39e;
+    }
+    .hero .btn-hero {
+      display: inline-block;
+      margin-top: 1.8rem;
+      padding: 0.9rem 2.6rem;
+      background: var(--glaze);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 40px 44px 40px 46px;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+      border: 2px solid var(--glaze);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+    .hero .btn-hero:hover {
+      background: var(--glaze-deep);
+      border-color: var(--glaze-deep);
+      transform: translateY(-2px);
+    }
+    .hero .btn-hero:focus-visible {
+      outline: 3px solid var(--white);
+      outline-offset: 2px;
+    }
+
+    /* Glaze drip divider — signature element */
+    .glaze-drip { position: absolute; left: 0; right: 0; bottom: -1px; height: 44px; z-index: 3; }
+
+    /* Trust Banner */
+    .trust-banner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.4rem 2.6rem;
+      padding: 1.2rem 2rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin: 0 2rem 2.5rem;
+      font-size: 0.85rem;
+      color: #4a3f34;
+      font-family: var(--font-mono);
+    }
+    .trust-banner span { display: flex; align-items: center; gap: 0.5rem; }
+    .trust-banner i { color: var(--glaze); font-size: 1rem; }
+    .trust-banner .secure-badge {
+      background: var(--clay);
+      color: var(--white);
+      padding: 0.25rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+    }
+
+    /* Search Section */
+    .search-section {
+      background: var(--white);
+      padding: 1.5rem 2rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+    }
+    .search-wrapper {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 0.9rem 1.5rem 0.9rem 3rem;
+      border: 1.5px solid var(--border);
+      border-radius: 30px;
+      font-size: 0.95rem;
+      outline: none;
+      font-family: var(--font-body);
+      background: var(--porcelain);
+      transition: border-color 0.2s;
+    }
+    .search-wrapper input:focus {
+      border-color: var(--glaze);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(181,80,47,0.12);
+    }
+    .search-wrapper i {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--glaze);
+      font-size: 1rem;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 1rem 2rem;
+      margin-bottom: 0;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+    .breadcrumb a:hover { color: var(--glaze); }
+    .breadcrumb .separator { color: #c9b9a4; }
+
+    /* Product Grid */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem 2rem; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.6rem;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--glaze); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; z-index: 5; border-radius: 0 0 6px 6px; }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--glaze);
+    }
+    .product-card:hover::before { transform: scaleX(1); }
+    .product-card:focus-within {
+      outline: 3px solid var(--glaze);
+      outline-offset: 2px;
+    }
+    .product-img {
+      height: 220px;
+      background: var(--porcelain);
+      overflow: hidden;
+      position: relative;
+      background-image: linear-gradient(145deg, #f0e6d8, #e5d8c4);
+    }
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover .product-img img { transform: scale(1.05); }
+    .product-info {
+      padding: 1.1rem 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .product-title { font-weight: 600; font-size: 0.98rem; font-family: var(--font-display); }
+    .product-price { font-weight: 700; font-size: 1.1rem; font-family: var(--font-mono); }
+    .product-category {
+      font-size: 0.68rem;
+      color: var(--glaze);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      font-family: var(--font-mono);
+    }
+
+    /* Pickers */
+    .picker-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 0.35rem 0; }
+    .picker-row .size-opt {
+      padding: 0.2rem 0.7rem;
+      border: 1px solid var(--slip);
+      border-radius: 16px;
+      font-size: 0.68rem;
+      cursor: pointer;
+      background: var(--white);
+      transition: all 0.15s;
+      min-width: 28px;
+      text-align: center;
+      font-family: var(--font-mono);
+    }
+    .picker-row .size-opt:hover { border-color: var(--glaze); }
+    .picker-row .size-opt.selected,
+    .picker-row .size-opt[aria-pressed="true"] {
+      border-color: var(--glaze);
+      background: var(--glaze);
+      color: var(--white);
+    }
+    .picker-row .color-swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 46% 54% 52% 48% / 50%;
+      border: 2px solid var(--slip);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .picker-row .color-swatch:hover,
+    .picker-row .color-swatch.selected,
+    .picker-row .color-swatch[aria-pressed="true"] {
+      border-color: var(--glaze);
+    }
+
+    /* Product Actions */
+    .product-actions { display: flex; gap: 0.5rem; margin-top: 0.6rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.55rem 1rem;
+      border-radius: 24px;
+      border: none;
+      font-weight: 500;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      justify-content: center;
+      flex: 1;
+      min-height: 36px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .btn-primary { background: var(--clay); color: var(--white); }
+    .btn-primary:hover { background: #40332a; }
+    .btn-wishlist {
+      background: transparent;
+      border: 1px solid var(--slip);
+      color: #5a4c3e;
+      flex: 0 0 auto;
+      padding: 0.55rem 0.8rem;
+    }
+    .btn-wishlist:hover { background: #f4e3dd; border-color: var(--glaze); color: var(--glaze); }
+    .btn-wishlist.active,
+    .btn-wishlist[aria-pressed="true"] {
+      background: #f4e3dd;
+      border-color: var(--glaze);
+      color: var(--glaze);
+    }
+
+    /* Panels */
+    .cart-overlay, .wishlist-overlay, .account-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(43,33,25,0.45);
+      z-index: 3000;
+    }
+    .cart-overlay.active, .wishlist-overlay.active, .account-overlay.active { display: block; }
+    .cart-panel, .wishlist-panel, .account-panel {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      max-width: 90vw;
+      height: 100%;
+      background: var(--white);
+      z-index: 3500;
+      padding: 1.5rem;
+      transition: right 0.3s ease;
+      box-shadow: -4px 0 30px rgba(43,33,25,0.15);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .cart-panel.open, .wishlist-panel.open, .account-panel.open { right: 0; }
+    .cart-panel .cart-header, .wishlist-panel .wishlist-header, .account-panel .account-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+    .cart-panel .cart-header h2, .wishlist-panel .wishlist-header h2, .account-panel .account-header h2 { font-size: 1.3rem; font-family: var(--font-display); }
+    .cart-panel .close-cart, .wishlist-panel .close-wishlist, .account-panel .close-account {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .cart-item, .wishlist-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-item img, .wishlist-item img {
+      width: 68px;
+      height: 68px;
+      object-fit: cover;
+      border-radius: 12px 14px 12px 16px;
+    }
+    .cart-item .item-details, .wishlist-item .item-details { flex: 1; }
+    .cart-item .item-details .item-title, .wishlist-item .item-details .item-title { font-weight: 600; font-family: var(--font-display); }
+    .cart-item .item-details .item-meta { font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-mono); }
+    .cart-item .item-qty { display: flex; align-items: center; gap: 0.5rem; }
+    .cart-item .item-qty button {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--slip);
+      background: var(--white);
+      cursor: pointer;
+    }
+    .cart-total {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--border);
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: var(--font-mono);
+    }
+    .cart-total .checkout-btn {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--clay);
+      color: var(--white);
+      border: none;
+      border-radius: 24px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .cart-total .checkout-btn:hover { background: #40332a; }
+    .wishlist-remove {
+      background: none;
+      border: none;
+      color: var(--glaze);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--clay);
+      color: var(--white);
+      padding: 0.8rem 2rem;
+      border-radius: 24px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(43,33,25,0.3);
+      z-index: 9999;
+      transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      white-space: nowrap;
+      max-width: 90%;
+      font-family: var(--font-mono);
+    }
+    .notification.show { bottom: 30px; }
+    .notification i { font-size: 1.1rem; }
+    .notification .check { color: #7fa072; }
+    .notification .heart { color: #e88a70; }
+
+    /* Newsletter */
+    .newsletter {
+      position: relative;
+      padding: 3rem 2rem;
+      margin-top: 3.5rem;
+      text-align: center;
+      border-radius: var(--radius-lg);
+      background-size: 90% auto;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url('NewsLetter.jpeg');
+      overflow: hidden;
+      isolation: isolate;
+      min-height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--clay);
+    }
+    .newsletter::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(43,33,25,0.82);
+      z-index: 0;
+      border-radius: var(--radius-lg);
+    }
+    .newsletter-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      max-width: 1000px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .newsletter-image {
+      flex: 0 0 190px;
+      height: 190px;
+      border-radius: 46% 54% 52% 48% / 50%;
+      overflow: hidden;
+      border: 4px solid rgba(255,251,244,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .newsletter-image img { width: 100%; height: 100%; object-fit: cover; }
+    .newsletter-text { flex: 1; min-width: 280px; }
+    .newsletter-text h2 {
+      font-weight: 700;
+      font-size: 2rem;
+      color: var(--white);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      margin-bottom: 0.5rem;
+      font-family: var(--font-display);
+    }
+    .newsletter-text p {
+      margin: 0.5rem 0 1.5rem;
+      color: #e8ddce;
+      font-weight: 400;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+      font-size: 0.95rem;
+      font-family: var(--font-mono);
+    }
+    .newsletter-text form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .newsletter-text input {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 30px;
+      outline: none;
+      font-size: 0.9rem;
+      background: rgba(255,251,244,0.92);
+      backdrop-filter: blur(2px);
+      min-width: 180px;
+      font-family: var(--font-body);
+    }
+    .newsletter-text input:focus { background: var(--white); }
+    .newsletter-text button {
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 30px;
+      background: var(--glaze);
+      color: var(--white);
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.82rem;
+    }
+    .newsletter-text button:hover { background: var(--glaze-deep); }
+
+    /* Footer */
+    .footer {
+      background: var(--clay);
+      color: #cbbca9;
+      padding: 3rem 2rem 1.5rem;
+      margin-top: 3rem;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+    .footer-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+    .footer h4 { color: var(--white); font-weight: 600; margin-bottom: 1rem; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.6px; font-family: var(--font-mono); }
+    .footer a {
+      color: #a3927e;
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--white); }
+    .footer .logo-image-footer {
+      height: 70px;
+      width: auto;
+      filter: brightness(1.15);
+      margin-bottom: 0.8rem;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .social-icons { display: flex; gap: 1rem; margin-top: 0.5rem; }
+    .social-icons a { font-size: 1.4rem; color: #8f7d69; }
+    .social-icons a:hover { color: var(--glaze); }
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 2.5rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid #4a3c30;
+      font-size: 0.78rem;
+      color: #766652;
+      text-align: center;
+      font-family: var(--font-mono);
+    }
+    .footer address {
+      font-style: normal;
+      color: #a3927e;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    /* Auth Modal */
+    .auth-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(43,33,25,0.5);
+      z-index: 5000;
+      justify-content: center;
+      align-items: center;
+    }
+    .auth-modal.active { display: flex; }
+    .auth-modal-content {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      max-width: 420px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(43,33,25,0.3);
+      position: relative;
+    }
+    .auth-modal-content .close-auth {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .auth-modal-content .close-auth:hover { color: var(--text); }
+    .auth-modal-content h2 { margin-bottom: 0.5rem; font-family: var(--font-display); }
+    .auth-modal-content .auth-toggle {
+      color: var(--glaze);
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .auth-modal-content input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      margin: 0.5rem 0;
+      border: 1px solid var(--slip);
+      border-radius: 22px;
+      font-size: 0.9rem;
+      outline: none;
+      font-family: var(--font-body);
+    }
+    .auth-modal-content input:focus { border-color: var(--glaze); }
+    .auth-modal-content .auth-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--clay);
+      color: var(--white);
+      border: none;
+      border-radius: 22px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .auth-modal-content .auth-btn:hover { background: #40332a; }
+    .auth-modal-content .auth-error {
+      color: var(--glaze);
+      font-size: 0.82rem;
+      margin: 0.3rem 0;
+      display: none;
+    }
+
+    /* Account Panel */
+    .account-panel .user-info {
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .account-panel .user-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 46% 54% 52% 48% / 50%;
+      background: var(--glaze);
+      color: white;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.8rem;
+      font-weight: 600;
+      font-family: var(--font-display);
+    }
+    .account-panel .user-name-display {
+      font-size: 1.15rem;
+      font-weight: 600;
+      font-family: var(--font-display);
+    }
+    .account-panel .user-email-display {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      font-family: var(--font-mono);
+    }
+    .account-panel .logout-btn {
+      width: 100%;
+      padding: 0.7rem;
+      background: var(--clay);
+      color: white;
+      border: none;
+      border-radius: 22px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background 0.2s;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .account-panel .logout-btn:hover { background: #40332a; }
+    .account-panel .guest-actions {
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .account-panel .guest-actions button {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid var(--slip);
+      border-radius: 22px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.88rem;
+      margin-top: 0.5rem;
+      transition: all 0.2s;
+      font-family: var(--font-mono);
+    }
+    .account-panel .guest-actions button:hover {
+      background: var(--clay);
+      color: white;
+      border-color: var(--clay);
+    }
+
+    /* Focus styles */
+    *:focus-visible {
+      outline: 3px solid var(--glaze);
+      outline-offset: 2px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .product-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 3.4rem; }
+    }
+    @media (max-width: 700px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+      .site-header { padding: 0.6rem 1rem; }
+      .nav-bar { display: none; }
+      .hero { padding: 3.5rem 1.5rem 5rem; min-height: 320px; }
+      .hero h1 { font-size: 2.8rem; }
+      .hero .tagline { font-size: 0.85rem; letter-spacing: 2px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .logo-image { height: 48px; }
+      .trust-banner { flex-direction: column; align-items: center; gap: 0.8rem; margin: 0 1rem 2rem; }
+      .cart-panel, .wishlist-panel, .account-panel { width: 100%; max-width: 100%; right: -100%; }
+      .notification { font-size: 0.8rem; padding: 0.6rem 1.2rem; }
+    }
+    @media (max-width: 480px) {
+      .header-right .icon-btn { font-size: 1.15rem; padding: 0.3rem 0.4rem; }
+      .logo-image { height: 40px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.2rem; }
+      .product-img { height: 160px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  
+
+        .announcement-bar { background: var(--clay); color: var(--white); padding: 0.55rem 0; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.3px; overflow: hidden; position: relative; z-index: 1001; font-family: var(--font-mono); text-transform: uppercase; }
+    
+        .announcement-slider { display: flex; animation: slideAnnouncements 12s infinite; white-space: nowrap; }
+    
+        .announcement-item { flex: 0 0 100%; text-align: center; padding: 0 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+  
+    /* Launch consistency: shared home-page shell variables and navigation polish */
+    :root {
+      --clay: #2b2119;
+      --porcelain: #f4ede0;
+      --glaze: #b5502f;
+      --glaze-deep: #8c3a22;
+      --slip: #e5d8c4;
+      --border: #e5d8c4;
+      --accent: #b5502f;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    .announcement-bar { background: var(--clay); color: var(--porcelain); overflow: hidden; height: 38px; display: flex; align-items: center; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.4px; }
+    .announcement-slider { display: flex; gap: 3rem; white-space: nowrap; animation: slide 24s linear infinite; padding-left: 100%; }
+    .announcement-item { display: inline-flex; align-items: center; gap: 0.5rem; }
+    .nav-bar a.active { color: var(--glaze); font-weight: 700; }
+    @media (max-width: 768px) { .announcement-bar { height: 34px; font-size: 0.68rem; } .nav-bar { display: none; } }
+
+  </style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement-bar" role="marquee" aria-label="Announcements">
+  <div class="announcement-slider">
+    <div class="announcement-item"><i class="fas fa-truck"></i> FREE SHIPPING ON ORDERS OVER R500</div>
+    <div class="announcement-item"><i class="fas fa-fire"></i> NEW DROP LIVE - SHOP THE LATEST</div>
+    <div class="announcement-item"><i class="fas fa-tag"></i> 20% OFF YOUR FIRST ORDER - USE CODE: BUSTED20</div>
+  </div>
+</div>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Cookie Consent Banner -->
+<div class="cookie-banner" id="cookieBanner" role="alert">
+  <p>We use cookies to enhance your browsing experience. By continuing to use this site, you agree to our <a href="/privacy-policy.html" style="color: #fff; text-decoration: underline;">Privacy Policy</a>.</p>
+  <div class="cookie-btns">
+    <button class="cookie-accept" id="cookieAccept">Accept All</button>
+    <button id="cookieDecline">Decline</button>
+  </div>
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile menu">
+  <button class="close-menu" id="closeMenuBtn" aria-label="Close menu"><i class="fas fa-times"></i></button>
+  <div class="user-section" id="mobileUserSection">
+    <div class="user-name" id="mobileUserName">Guest</div>
+    <div class="user-email" id="mobileUserEmail">Not signed in</div>
+    <div class="auth-btns" id="mobileAuthBtns">
+      <button id="mobileSignInBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+      <button id="mobileSignUpBtn"><i class="fas fa-user-plus"></i> Sign Up</button>
+    </div>
+    <div class="auth-btns" id="mobileLogoutBtn" style="display:none;">
+      <button id="mobileLogoutAction"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="NewArrivals.html">New Arrivals</a>
+    <a href="ShopApparel.html">Shop Apparel</a>
+    <a href="Kids.html">Kids</a>
+    <a href="Accessories.html">Accessories</a>
+    <a href="Sale.html">Sale</a>
+  </nav>
+</div>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-panel" id="cartPanel" role="dialog" aria-labelledby="cartTitle">
+  <div class="cart-header">
+    <h2 id="cartTitle"><i class="fas fa-shopping-bag"></i> Cart</h2>
+    <button class="close-cart" id="closeCartBtn" aria-label="Close cart"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="cartItems"></div>
+  <div class="cart-total" id="cartTotal">
+    <div>Total: <span id="cartTotalPrice">R0.00</span></div>
+    <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+  </div>
+</div>
+
+<div class="wishlist-overlay" id="wishlistOverlay"></div>
+<div class="wishlist-panel" id="wishlistPanel" role="dialog" aria-labelledby="wishlistTitle">
+  <div class="wishlist-header">
+    <h2 id="wishlistTitle"><i class="fas fa-heart"></i> Wishlist</h2>
+    <button class="close-wishlist" id="closeWishlistBtn" aria-label="Close wishlist"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="wishlistItems"></div>
+</div>
+
+<div class="account-overlay" id="accountOverlay"></div>
+<div class="account-panel" id="accountPanel" role="dialog" aria-labelledby="accountTitle">
+  <div class="account-header">
+    <h2 id="accountTitle"><i class="fas fa-user-circle"></i> Account</h2>
+    <button class="close-account" id="closeAccountBtn" aria-label="Close account"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="accountContent"></div>
+</div>
+
+<div class="auth-modal" id="authModal" role="dialog" aria-labelledby="authTitle">
+  <div class="auth-modal-content">
+    <button class="close-auth" id="closeAuthBtn" aria-label="Close authentication"><i class="fas fa-times"></i></button>
+    <h2 id="authTitle">Sign In</h2>
+    <div class="auth-error" id="authError" role="alert">Invalid credentials</div>
+    <input type="text" id="authName" placeholder="Full Name" style="display:none;" autocomplete="name" />
+    <input type="email" id="authEmail" placeholder="Email address" autocomplete="email" />
+    <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password" />
+    <button class="auth-btn" id="authSubmitBtn">Sign In</button>
+    <p style="margin-top:0.8rem; font-size:0.85rem;">
+      <span id="authToggleText">Don't have an account?</span>
+      <span class="auth-toggle" id="authToggleBtn" role="button" tabindex="0">Sign Up</span>
+    </p>
+  </div>
+</div>
+
+<div class="notification" id="notification" role="alert" aria-live="polite">
+  <i class="fas fa-check check"></i>
+  <span id="notificationText">Added to cart</span>
+</div>
+
+<header class="site-header" role="banner">
+  <div class="header-left">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+  <div class="header-center">
+    <a href="index.html" class="logo-link" aria-label="Busted Child Home">
+      <img class="logo-image" src="LOGO.jpeg" alt="Busted Child logo" width="220" height="65" />
+    </a>
+  </div>
+  <div class="header-right">
+    <button class="icon-btn" id="accountBtn" aria-label="Account">
+      <i class="far fa-user"></i>
+    </button>
+    <button class="icon-btn" id="wishlistOpenBtn" aria-label="Wishlist">
+      <i class="far fa-heart"></i>
+      <span class="badge badge-wishlist" id="wishlistBadge">0</span>
+    </button>
+    <button class="icon-btn" id="cartOpenBtn" aria-label="Open cart">
+      <i class="fas fa-shopping-bag"></i>
+      <span class="badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <a href="index.html">Home</a>
+  <a href="NewArrivals.html" class="active">New Arrivals</a>
+  <a href="ShopApparel.html">Shop Apparel</a>
+  <a href="Kids.html">Kids</a>
+  <a href="Accessories.html">Accessories</a>
+  <a href="Sale.html">Sale</a>
+</nav>
+
+<main id="main-content">
+  <div class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="separator">/</span>
+    <span>New Arrivals</span>
+  </div>
+
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-content">
+      <h1 id="hero-heading">JUST DROPPED</h1>
+      <div class="tagline">Be the first to wear the latest from Busted Child</div>
+      <a href="#searchSection" class="btn-hero">Explore New</a>
+    </div>
+    <svg class="glaze-drip" viewBox="0 0 1440 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M0,0 L1440,0 L1440,10 C1380,10 1350,30 1300,30 C1260,30 1250,14 1210,14 C1160,14 1150,38 1090,38 C1040,38 1030,18 980,18 C920,18 905,34 850,34 C800,34 790,12 740,12 C680,12 665,28 610,28 C560,28 550,16 500,16 C440,16 425,36 370,36 C320,36 310,10 260,10 C200,10 185,26 130,26 C85,26 75,16 30,16 C15,16 5,18 0,20 Z" fill="#f4ede0"></path>
+    </svg>
+  </section>
+
+  <div class="trust-banner" role="complementary" aria-label="Store features">
+    <span><i class="fas fa-lock" aria-hidden="true"></i> Secure checkout</span>
+    <span><i class="fas fa-arrows-rotate" aria-hidden="true"></i> Free returns within 30 days</span>
+    <span><i class="fas fa-truck" aria-hidden="true"></i> Free shipping on orders over R500</span>
+    <span class="secure-badge"><i class="fas fa-shield-alt" aria-hidden="true"></i> 100% secure</span>
+  </div>
+
+  <div class="container">
+    <div class="search-section" id="searchSection">
+      <div class="search-wrapper">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input type="text" id="searchInput" placeholder="Search new arrivals..." aria-label="Search new arrivals" />
+      </div>
+    </div>
+
+    <div class="product-grid" id="productGrid" role="list" aria-label="New arrivals products"></div>
+
+    <section class="newsletter" aria-labelledby="newsletter-heading">
+      <div class="newsletter-content">
+        <div class="newsletter-image">
+          <img src="BustedChildSticker.jpeg" alt="Busted Child brand sticker" loading="lazy" />
+        </div>
+        <div class="newsletter-text">
+          <h2 id="newsletter-heading">Stay Updated</h2>
+          <p>Be the first to know about our newest arrivals</p>
+          <form id="newsletterForm">
+            <input type="email" placeholder="your email address" required aria-label="Email for newsletter" />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="logo-wrapper">
+      <img class="logo-image-footer" src="TC BC.jpeg" alt="Busted Child logo" loading="lazy" />
+      <div class="social-icons">
+        <a href="https://tiktok.com/@bustedchild" target="_blank" rel="noopener noreferrer" aria-label="Follow us on TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://facebook.com/bustedchild" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://instagram.com/bustedchild" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <a href="index.html">Home</a>
+      <a href="NewArrivals.html">New Arrivals</a>
+      <a href="ShopApparel.html">Shop Apparel</a>
+      <a href="Kids.html">Kids</a>
+      <a href="Accessories.html">Accessories</a>
+      <a href="Sale.html">Sale</a>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms-of-service.html">Terms of Service</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <address>
+        343 Peter Mokaba Street, Lotus Gardens<br />
+        Pretoria West<br />
+        <a href="tel:+27632524838">063 252 4838</a><br />
+        <a href="mailto:bustedchildclothingza@gmail.com">bustedchildclothingza@gmail.com</a>
+      </address>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; <span id="year"></span> BUSTED CHILD CLOTHING. All rights reserved. Built by BarkerTech Innovations.
+  </div>
+</footer>
+
+<script>
+(function() {
+  // Products Database
+  const allProducts = [
+    { id: 1, name: "Busted Child To The WORLD Tee", price: 450, category: "shirts", image: "BC TO WRLD_Front.png", colors: ["White"], sizes: ["S","M","L","XL"] },
+    { id: 2, name: "UBC Unisex Tee", price: 450, category: "shirts", image: "UBC TEE_BlackFront.png", colors: ["Black","White"], sizes: ["S","M","L","XL"] },
+    { id: 3, name: "University of BC Tee", price: 500, category: "shirts", image: "UniBC 1.0 BlackFront.jpeg", colors: ["Black","White"], sizes: ["S","M","L","XL"] },
+    { id: 4, name: "All Dawgs Go To Heaven Tee", price: 450, category: "shirts", image: "All Dawgs Tee WhiteFront.png", colors: ["White"], sizes: ["S","M","L","XL"] },
+    { id: 5, name: "No Hood Like ChildHood Tee", price: 400, category: "shirts", image: "NoHood BlackFront.png", colors: ["Black","White"], sizes: ["S","M","L","XL"] },
+    { id: 6, name: "Daily Times 'Ku Lavheka Mali' Tee", price: 500, category: "shirts", image: "DailyTimes BlackFront.png", colors: ["Black"], sizes: ["S","M","L","XL"] },
+    { id: 7, name: "CAUTION Unisex Tee", price: 450, category: "shirts", image: "Caution WhiteFront.png", colors: ["White"], sizes: ["S","M","L","XL"] },
+    { id: 8, name: "Ghost Town Tee", price: 400, category: "shirts", image: "Ghost Town Black.png", colors: ["Black","Red","White"], sizes: ["S","M","L","XL"] },
+    { id: 9, name: "3D Puffed Hoodie", price: 650, category: "hoodies", image: "BC Earth.png", colors: ["Black"], sizes: ["S","M","L","XL"] },
+    { id: 10, name: "UBC Unisex Hoodie", price: 650, category: "hoodies", image: "UBC HoodieFront.png", colors: ["White"], sizes: ["S","M","L","XL"] },
+    { id: 11, name: "Tennis Club Hoodie", price: 450, category: "hoodies", image: "TennisClub Front.png", colors: ["Black"], sizes: ["S","M","L","XL"] },
+    { id: 12, name: "All Dawgs Go To Heaven Hoodie", price: 650, category: "hoodies", image: "All Dawgs HoodieFront.png", colors: ["White"], sizes: ["S","M","L","XL"] },
+    { id: 13, name: "Happy Pill Glow Hoodie", price: 650, category: "hoodies", image: "HappyPill HoodieFront.png", colors: ["White"], sizes: ["S","M","L","XL"] },
+    { id: 14, name: "Caution Unisex Sweater", price: 520, category: "sweaters", image: "Caution SweaterFront.png", colors: ["White"], sizes: ["M","L","XL"] },
+    { id: 15, name: "3D Unisex Sweater", price: 400, category: "sweaters", image: "Busted Sweater.jpeg", colors: ["Grey"], sizes: ["S","M","L","XL"] },
+    { id: 16, name: "All Dawgs Go To Heaven Sweater", price: 500, category: "sweaters", image: "All Dawgs SweaterFront.png", colors: ["White"], sizes: ["S","M","L","XL"] },
+    { id: 17, name: "3D Puffed Trouser", price: 450, category: "pants", image: "Earth Sweatpants.jpeg", colors: ["Black"], sizes: ["S","M","L","XL"] },
+    { id: 18, name: "GHOST TOWN SweatPants", price: 450, category: "pants", image: "BC SweatPants.jpg", colors: ["Khaki","Stone"], sizes: ["S","M","L","XL"] },
+    { id: 19, name: "BASKETBALL SweatPants", price: 450, category: "pants", image: "BASKETBALL SWEAT.jpeg", colors: ["Khaki"], sizes: ["S","M","L","XL"] },
+    { id: 20, name: "BASKETBALL CLUB SweatPants", price: 350, category: "pants", image: "BSK CLUB.png", colors: ["White"], sizes: ["S","M","L","XL"] },
+    { id: 21, name: "Happy Pill Trucker Cap", price: 200, category: "accessories", image: "BC LickCap.jpeg", colors: ["Black"], sizes: ["One size"] },
+    { id: 22, name: "Busted Child Trucker Cap", price: 200, category: "accessories", image: "BC Cap.jpg", colors: ["Black"], sizes: ["One size"] },
+    { id: 23, name: "Busted Child Beanie", price: 180, category: "accessories", image: "BC Beanie.jpg", colors: ["Blue"], sizes: ["One size"] },
+    { id: 24, name: "Certified Lovers Beanie", price: 250, category: "accessories", image: "BC Beanie2 black.jpeg", colors: ["Black","Red","Grey"], sizes: ["One size"] },
+    { id: 25, name: "BUSTED GROVE Beanie", price: 200, category: "accessories", image: "BC Grove Black.png", colors: ["Black","White"], sizes: ["One size"] },
+    { id: 26, name: "Mini BC Kids Set", price: 490, category: "kids", image: "Kids Set.jpg", colors: ["Cocoa","Black"], sizes: ["S","M","L","XL"] }
+  ];
+
+  function sanitizeInput(input) {
+    const div = document.createElement('div');
+    div.textContent = input;
+    return div.innerHTML;
+  }
+
+  function shuffleArray(arr) {
+    const s = [...arr];
+    for (let i = s.length-1; i>0; i--) {
+      const j = Math.floor(Math.random()*(i+1));
+      [s[i],s[j]] = [s[j],s[i]];
+    }
+    return s;
+  }
+
+  const products = shuffleArray(allProducts);
+  let cart = JSON.parse(localStorage.getItem('bustedCart') || '[]');
+  let wishlist = JSON.parse(localStorage.getItem('bustedWishlist') || '[]');
+  let currentUser = JSON.parse(localStorage.getItem('bustedUser') || 'null');
+  let selectedSizes = {};
+  let selectedColors = {};
+  let nt = null;
+
+  const grid = document.getElementById('productGrid');
+  const searchInput = document.getElementById('searchInput');
+  const cB = document.getElementById('cartBadge');
+  const wB = document.getElementById('wishlistBadge');
+  const cP = document.getElementById('cartPanel');
+  const cO = document.getElementById('cartOverlay');
+  const cI = document.getElementById('cartItems');
+  const cTP = document.getElementById('cartTotalPrice');
+  const wP = document.getElementById('wishlistPanel');
+  const wO = document.getElementById('wishlistOverlay');
+  const wI = document.getElementById('wishlistItems');
+  const aP = document.getElementById('accountPanel');
+  const aO = document.getElementById('accountOverlay');
+  const aC = document.getElementById('accountContent');
+  const notif = document.getElementById('notification');
+  const nT = document.getElementById('notificationText');
+  const aM = document.getElementById('authModal');
+  const aTi = document.getElementById('authTitle');
+  const aN = document.getElementById('authName');
+  const aE = document.getElementById('authEmail');
+  const aPw = document.getElementById('authPassword');
+  const aSB = document.getElementById('authSubmitBtn');
+  const aTB = document.getElementById('authToggleBtn');
+  const aTT = document.getElementById('authToggleText');
+  const aEr = document.getElementById('authError');
+
+  let isLogin = true;
+
+  // Notification
+  function sn(m,i,c) {
+    nT.textContent = sanitizeInput(m);
+    const ic = notif.querySelector('i');
+    ic.className = `fas ${i||'fa-check'} ${c||'check'}`;
+    notif.classList.add('show');
+    clearTimeout(nt);
+    nt = setTimeout(() => notif.classList.remove('show'), 2500);
+  }
+
+  // User Management
+  async function checkAuthOnLoad() {
+    if (!window.supabaseAuth || typeof window.supabaseAuth.getCurrentUser !== 'function') {
+      console.warn('supabaseAuth not loaded yet.');
+      currentUser = null;
+      uU();
+      return;
+    }
+    const user = await window.supabaseAuth.getCurrentUser();
+    currentUser = user;
+    uU();
+    try { window.processPendingAction(); } catch(e) { console.warn(e); }
+  }
+
+  function uU() {
+    if(currentUser) {
+      document.getElementById('mobileUserName').textContent = currentUser.name;
+      document.getElementById('mobileUserEmail').textContent = currentUser.email;
+      document.getElementById('mobileAuthBtns').style.display = 'none';
+      document.getElementById('mobileLogoutBtn').style.display = 'block';
+      document.querySelector('.icon-btn[aria-label="Account"] i').className = 'fas fa-user-check';
+      uA();
+    } else {
+      document.getElementById('mobileUserName').textContent = 'Guest';
+      document.getElementById('mobileUserEmail').textContent = 'Not signed in';
+      document.getElementById('mobileAuthBtns').style.display = 'flex';
+      document.getElementById('mobileLogoutBtn').style.display = 'none';
+      document.querySelector('.icon-btn[aria-label="Account"] i').className = 'far fa-user';
+      uA();
+    }
+  }
+
+  function uA() {
+    if(currentUser) {
+      aC.innerHTML = `
+        <div class="user-info">
+          <div class="user-avatar">${sanitizeInput(currentUser.name.charAt(0).toUpperCase())}</div>
+          <div class="user-name-display">${sanitizeInput(currentUser.name)}</div>
+          <div class="user-email-display">${sanitizeInput(currentUser.email)}</div>
+          <button class="logout-btn" id="pLB"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+      `;
+      document.getElementById('pLB').addEventListener('click', logout);
+    } else {
+      aC.innerHTML = `
+        <div class="guest-actions">
+          <p style="text-align:center;color:#8a7a68;margin-bottom:0.5rem;">Sign in to access your account</p>
+          <button id="pSI"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+          <button id="pSU"><i class="fas fa-user-plus"></i> Sign Up</button>
+        </div>
+      `;
+      document.getElementById('pSI').addEventListener('click',() => { cA(); sAM('login'); });
+      document.getElementById('pSU').addEventListener('click',() => { cA(); sAM('signup'); });
+    }
+  }
+
+  function sAM(m) {
+    isLogin = m === 'login';
+    aTi.textContent = isLogin ? 'Sign In' : 'Create Account';
+    aSB.textContent = isLogin ? 'Sign In' : 'Sign Up';
+    aTT.textContent = isLogin ? "Don't have an account?" : "Already have an account?";
+    aTB.textContent = isLogin ? 'Sign Up' : 'Sign In';
+    aN.style.display = isLogin ? 'none' : 'block';
+    aEr.style.display = 'none';
+    aM.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    aE.focus();
+  }
+
+  async function hA() {
+    const e = aE.value.trim();
+    const p = aPw.value.trim();
+    if (!e) {
+      aEr.textContent = 'Please enter your email.';
+      aEr.style.display = 'block';
+      return;
+    }
+    if (!isLogin && !aN.value.trim()) {
+      aEr.textContent = 'Please enter your full name.';
+      aEr.style.display = 'block';
+      return;
+    }
+    if (!window.supabaseAuth || typeof window.supabaseAuth.signIn !== 'function') {
+      aEr.textContent = 'Authentication service is unavailable. Please refresh.';
+      aEr.style.display = 'block';
+      return;
+    }
+
+    const email = e;
+    const name = aN.value.trim();
+
+    if (!p) {
+      aEr.textContent = 'Please enter your password.';
+      aEr.style.display = 'block';
+      aSB.disabled = false;
+      aSB.textContent = isLogin ? 'Sign In' : 'Sign Up';
+      return;
+    }
+
+    aEr.style.display = 'none';
+    aEr.textContent = '';
+    aSB.disabled = true;
+    aSB.textContent = 'Processing...';
+
+    try {
+      if (isLogin) {
+        const result = await window.supabaseAuth.signIn(email, p);
+        if (result.success) {
+          currentUser = await window.supabaseAuth.getCurrentUser();
+          if (currentUser) {
+            uU();
+            aM.classList.remove('active');
+            document.body.style.overflow = '';
+            sn(`Welcome back ${currentUser.name}!`);
+            aE.value = '';
+            aPw.value = '';
+            aN.value = '';
+          }
+        } else {
+          const msg = (typeof result.message === 'string') ? result.message : (result && typeof result === 'object' ? JSON.stringify(result.message || result) : String(result));
+          console.warn('Auth result (non-success):', result);
+          aEr.textContent = msg;
+          aEr.style.display = 'block';
+        }
+      } else {
+        const result = await window.supabaseAuth.signUp(email, p, name);
+        if (result.success) {
+          if (result.requiresVerification) {
+            aEr.style.color = '#5c7a52';
+            const resultMsg = (typeof result.message === 'string') ? result.message : (result && typeof result === 'object' ? JSON.stringify(result.message || result) : String(result));
+            aEr.innerHTML = `${resultMsg} <br><a href="verify.html" style="display:inline-block;margin-top:10px;color:var(--clay);font-weight:700;">Verify your account</a> <br><button id="resendVerificationBtn" style="margin-top:10px;padding:6px 16px;background:var(--clay);color:white;border:none;border-radius:16px;cursor:pointer;">Resend OTP</button>`;
+            aEr.style.display = 'block';
+            document.getElementById('resendVerificationBtn')?.addEventListener('click', async function() {
+              this.disabled = true;
+              this.textContent = 'Sending...';
+              const resendResult = await window.supabaseAuth.resendOtp(email);
+              if (resendResult.success) {
+                sn('OTP resent! Check your email.', 'fa-envelope', '#5c7a52');
+              } else {
+                sn(resendResult.message, 'fa-exclamation-circle', '#b5502f');
+              }
+              this.disabled = false;
+              this.textContent = 'Resend OTP';
+            });
+          } else {
+            currentUser = await window.supabaseAuth.getCurrentUser();
+            if (currentUser) {
+              uU();
+              aM.classList.remove('active');
+              document.body.style.overflow = '';
+              sn('Account created! Welcome!');
+              aE.value = '';
+              aPw.value = '';
+              aN.value = '';
+            }
+          }
+        } else {
+          const msg = (typeof result.message === 'string') ? result.message : (result && typeof result === 'object' ? JSON.stringify(result.message || result) : String(result));
+          console.warn('Auth result (non-success):', result);
+          aEr.textContent = msg;
+          aEr.style.display = 'block';
+        }
+      }
+    } catch (error) {
+      console.error('Auth error:', error);
+      aEr.textContent = 'An unexpected error occurred. Please try again.';
+      aEr.style.display = 'block';
+    } finally {
+      aSB.disabled = false;
+      aSB.textContent = isLogin ? 'Sign In' : 'Sign Up';
+    }
+  }
+
+  async function logout() {
+    if (!window.supabaseAuth || typeof window.supabaseAuth.signOut !== 'function') {
+      currentUser = null;
+      localStorage.removeItem('bustedUser');
+      uU();
+      sn('Logged out successfully');
+      cA(); cM();
+      return;
+    }
+    const result = await window.supabaseAuth.signOut();
+    if (result.success) {
+      currentUser = null;
+      uU();
+      sn('Logged out successfully');
+      cA(); cM();
+    } else {
+      sn(result.message || 'Failed to logout', 'fa-exclamation-circle', '#b5502f');
+    }
+  }
+
+  // Cart Management
+  function saveCart() { localStorage.setItem('bustedCart', JSON.stringify(cart)); }
+  function saveWishlist() { localStorage.setItem('bustedWishlist', JSON.stringify(wishlist)); }
+
+  function aTC(id) {
+    if(!currentUser) { localStorage.setItem('pendingAction', JSON.stringify({type:'addToCart', id: id})); sAM('login'); return; }
+    const p = allProducts.find(x => x.id === id);
+    if(!p) return;
+    const sz = selectedSizes[id] || p.sizes[0], cl = selectedColors[id] || p.colors[0];
+    const ex = cart.find(i => i.id === id && i.size === sz && i.color === cl);
+    if(ex) { ex.qty += 1; }
+    else { cart.push({...p, qty: 1, size: sz, color: cl}); }
+    saveCart();
+    uC();
+    sn(`Added "${p.name}" to cart`);
+  }
+
+  function rFC(id, sz, cl) {
+    const idx = cart.findIndex(i => i.id === id && i.size === sz && i.color === cl);
+    if(idx > -1) {
+      if(cart[idx].qty > 1) { cart[idx].qty -= 1; }
+      else { cart.splice(idx, 1); }
+    }
+    saveCart();
+    uC();
+  }
+
+  function uC() {
+    cB.textContent = cart.reduce((s,i) => s + i.qty, 0);
+    cTP.textContent = `R${cart.reduce((s,i) => s + (i.price * i.qty), 0).toFixed(2)}`;
+    cI.innerHTML = cart.length === 0
+      ? `<p style="text-align:center;color:#8a7a68;padding:2rem 0;">Your cart is empty.</p>`
+      : cart.map(i => `
+        <div class="cart-item">
+          <img src="${sanitizeInput(i.image)}" alt="${sanitizeInput(i.name)}" loading="lazy" />
+          <div class="item-details">
+            <div class="item-title">${sanitizeInput(i.name)}</div>
+            <div class="item-meta">${sanitizeInput(i.size)} · ${sanitizeInput(i.color)} · R${i.price}</div>
+            <div class="item-qty">
+              <button onclick="window.rFC(${i.id},'${sanitizeInput(i.size)}','${sanitizeInput(i.color)}')" aria-label="Decrease quantity">−</button>
+              <span>${i.qty}</span>
+              <button onclick="window.aTC(${i.id})" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+  }
+
+  // Wishlist
+  function tW(id) {
+    if(!currentUser) { localStorage.setItem('pendingAction', JSON.stringify({type:'addToWishlist', id: id})); sAM('login'); return; }
+    const idx = wishlist.findIndex(i => i.id === id);
+    if(idx > -1) {
+      wishlist.splice(idx, 1);
+      sn('Removed from wishlist', 'fa-heart', 'heart');
+    } else {
+      const p = allProducts.find(x => x.id === id);
+      if(p) {
+        wishlist.push({...p});
+        sn(`Added "${p.name}" to wishlist`, 'fa-heart', 'heart');
+      }
+    }
+    saveWishlist();
+    uW();
+  }
+
+  function uW() {
+    wB.textContent = wishlist.length;
+    wI.innerHTML = wishlist.length === 0
+      ? `<p style="text-align:center;color:#8a7a68;padding:2rem 0;">Your wishlist is empty.</p>`
+      : wishlist.map(i => `
+        <div class="wishlist-item">
+          <img src="${sanitizeInput(i.image)}" alt="${sanitizeInput(i.name)}" loading="lazy" />
+          <div class="item-details">
+            <div class="item-title">${sanitizeInput(i.name)}</div>
+            <div class="item-meta">R${i.price}</div>
+            <button class="btn btn-primary" style="margin-top:0.3rem;padding:0.3rem 0.8rem;font-size:0.7rem;" onclick="window.aCFW(${i.id})">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+          </div>
+          <button class="wishlist-remove" onclick="window.tW(${i.id})" aria-label="Remove from wishlist">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `).join('');
+  }
+
+  window.tW = tW;
+  window.aTC = aTC;
+  window.rFC = rFC;
+  window.aCFW = function(id) {
+    aTC(id);
+    const idx = wishlist.findIndex(i => i.id === id);
+    if(idx > -1) { wishlist.splice(idx, 1); saveWishlist(); uW(); }
+  };
+
+  // Panels
+  function oC() { cP.classList.add('open'); cO.classList.add('active'); document.body.style.overflow = 'hidden'; }
+  function cC() { cP.classList.remove('open'); cO.classList.remove('active'); document.body.style.overflow = ''; }
+  function oW() { wP.classList.add('open'); wO.classList.add('active'); document.body.style.overflow = 'hidden'; }
+  function cW() { wP.classList.remove('open'); wO.classList.remove('active'); document.body.style.overflow = ''; }
+  function oA() { aP.classList.add('open'); aO.classList.add('active'); document.body.style.overflow = 'hidden'; uA(); }
+  function cA() { aP.classList.remove('open'); aO.classList.remove('active'); document.body.style.overflow = ''; }
+
+  document.getElementById('cartOpenBtn').addEventListener('click', oC);
+  document.getElementById('closeCartBtn').addEventListener('click', cC);
+  document.getElementById('cartOverlay').addEventListener('click', cC);
+  document.getElementById('wishlistOpenBtn').addEventListener('click', oW);
+  document.getElementById('closeWishlistBtn').addEventListener('click', cW);
+  document.getElementById('wishlistOverlay').addEventListener('click', cW);
+  document.getElementById('accountBtn').addEventListener('click', oA);
+  document.getElementById('closeAccountBtn').addEventListener('click', cA);
+  document.getElementById('accountOverlay').addEventListener('click', cA);
+
+  // Checkout redirect
+  document.getElementById('checkoutBtn').addEventListener('click', function() {
+    if(cart.length === 0) { sn('Your cart is empty'); return; }
+    saveCart();
+    window.location.href = 'checkout.html';
+  });
+
+  // Hamburger menu
+  function oM() {
+    document.getElementById('mobileMenu').classList.add('open');
+    document.getElementById('menuOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('hamburgerBtn').setAttribute('aria-expanded', 'true');
+  }
+  function cM() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('menuOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('hamburgerBtn').setAttribute('aria-expanded', 'false');
+  }
+
+  document.getElementById('hamburgerBtn').addEventListener('click', oM);
+  document.getElementById('closeMenuBtn').addEventListener('click', cM);
+  document.getElementById('menuOverlay').addEventListener('click', cM);
+
+  document.getElementById('mobileSignInBtn').addEventListener('click',() => { cM(); sAM('login'); });
+  document.getElementById('mobileSignUpBtn').addEventListener('click',() => { cM(); sAM('signup'); });
+  document.getElementById('mobileLogoutAction').addEventListener('click', logout);
+
+  // Auth modal
+  document.getElementById('closeAuthBtn').addEventListener('click',() => {
+    aM.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+  aM.addEventListener('click', (e) => {
+    if(e.target === aM) { aM.classList.remove('active'); document.body.style.overflow = ''; }
+  });
+
+  aSB.addEventListener('click', hA);
+  aTB.addEventListener('click',() => {
+    isLogin = !isLogin;
+    aTi.textContent = isLogin ? 'Sign In' : 'Create Account';
+    aSB.textContent = isLogin ? 'Sign In' : 'Sign Up';
+    aTT.textContent = isLogin ? "Don't have an account?" : "Already have an account?";
+    aTB.textContent = isLogin ? 'Sign Up' : 'Sign In';
+    aN.style.display = isLogin ? 'none' : 'block';
+    aEr.style.display = 'none';
+  });
+
+  [aE,aPw,aN].forEach(i => {
+    i.addEventListener('keydown',(e) => { if(e.key === 'Enter') hA(); });
+  });
+
+  // Newsletter
+  document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = this.querySelector('input').value.trim();
+    if(email) {
+      const subscribers = JSON.parse(localStorage.getItem('bustedSubscribers') || '[]');
+      subscribers.push({ email: sanitizeInput(email), date: new Date().toISOString() });
+      localStorage.setItem('bustedSubscribers', JSON.stringify(subscribers));
+      sn('Thanks for subscribing!', 'fa-envelope', 'check');
+      this.reset();
+    }
+  });
+
+  // Cookie consent
+  if(!localStorage.getItem('bustedCookies')) {
+    document.getElementById('cookieBanner').classList.add('active');
+  }
+  document.getElementById('cookieAccept').addEventListener('click', function() {
+    localStorage.setItem('bustedCookies', 'accepted');
+    document.getElementById('cookieBanner').classList.remove('active');
+  });
+  document.getElementById('cookieDecline').addEventListener('click', function() {
+    localStorage.setItem('bustedCookies', 'declined');
+    document.getElementById('cookieBanner').classList.remove('active');
+  });
+
+  // Search and render
+  function filterAndRender() {
+    const query = searchInput.value.toLowerCase().trim();
+    const filtered = query ? allProducts.filter(p => p.name.toLowerCase().includes(query)) : products;
+    renderProducts(filtered);
+  }
+
+  function renderProducts(productsToRender) {
+    grid.innerHTML = productsToRender.map(p => {
+      const iW = wishlist.some(i => i.id === p.id);
+      return `
+        <div class="product-card" data-id="${p.id}" role="listitem">
+          <div class="product-img">
+            <img src="${sanitizeInput(p.image)}" alt="${sanitizeInput(p.name)}" loading="lazy" />
+          </div>
+          <div class="product-info">
+            <div class="product-category">${sanitizeInput(p.category)}</div>
+            <div class="product-title">${sanitizeInput(p.name)}</div>
+            <div class="product-price">R${p.price}</div>
+            <div class="picker-row" role="group" aria-label="Size options">
+              ${p.sizes.map(s => `
+                <span class="size-opt" data-size="${sanitizeInput(s)}" data-id="${p.id}"
+                      role="button" tabindex="0" aria-pressed="false">${sanitizeInput(s)}</span>
+              `).join('')}
+            </div>
+            <div class="picker-row" role="group" aria-label="Color options">
+              ${p.colors.map(c => `
+                <span class="color-swatch" style="background:${sanitizeInput(c)}"
+                      data-color="${sanitizeInput(c)}" data-id="${p.id}"
+                      role="button" tabindex="0" aria-pressed="false"
+                      aria-label="Color: ${sanitizeInput(c)}"></span>
+              `).join('')}
+            </div>
+            <div class="product-actions">
+              <button class="btn btn-primary add-cart-btn" data-id="${p.id}" aria-label="Add ${sanitizeInput(p.name)} to cart">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+              <button class="btn btn-wishlist wishlist-btn ${iW?'active':''}" data-id="${p.id}"
+                      aria-label="${iW?'Remove from wishlist':'Add to wishlist'}" aria-pressed="${iW}">
+                <i class="${iW?'fas':'far'} fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    bPE();
+  }
+
+  function bPE() {
+    document.querySelectorAll('.size-opt').forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const id = +this.dataset.id;
+        document.querySelectorAll(`.size-opt[data-id="${id}"]`).forEach(s => {
+          s.classList.remove('selected'); s.setAttribute('aria-pressed', 'false');
+        });
+        this.classList.add('selected'); this.setAttribute('aria-pressed', 'true');
+        selectedSizes[id] = this.dataset.size;
+      });
+    });
+
+    document.querySelectorAll('.color-swatch').forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const id = +this.dataset.id;
+        document.querySelectorAll(`.color-swatch[data-id="${id}"]`).forEach(s => {
+          s.classList.remove('selected'); s.setAttribute('aria-pressed', 'false');
+        });
+        this.classList.add('selected'); this.setAttribute('aria-pressed', 'true');
+        selectedColors[id] = this.dataset.color;
+      });
+    });
+
+    document.querySelectorAll('.add-cart-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) { e.stopPropagation(); aTC(+this.dataset.id); });
+    });
+
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const id = +this.dataset.id;
+        tW(id);
+        const iW = wishlist.some(i => i.id === id);
+        const icon = this.querySelector('i');
+        icon.className = iW ? 'fas fa-heart' : 'far fa-heart';
+        this.classList.toggle('active', iW);
+        this.setAttribute('aria-pressed', iW);
+        this.setAttribute('aria-label', iW ? 'Remove from wishlist' : 'Add to wishlist');
+      });
+    });
+
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        if(e.target.closest('button') || e.target.closest('.size-opt') || e.target.closest('.color-swatch')) return;
+        window.location.href = `Product.html?id=${this.dataset.id}`;
+      });
+    });
+  }
+
+  searchInput.addEventListener('input', filterAndRender);
+
+  // Initialize
+  document.getElementById('year').textContent = new Date().getFullYear();
+  checkAuthOnLoad();
+  filterAndRender();
+  uC();
+  uW();
+
+  // Image error handling
+  document.querySelectorAll('.product-img img').forEach(img => {
+    img.addEventListener('error', function() { this.style.display = 'none'; });
+  });
+
+  // Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+    });
+  }
+})();
+</script>
+</body>
+</html>

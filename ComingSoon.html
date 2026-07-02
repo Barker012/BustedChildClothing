@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Busted Child Clothing - The Best Out Of Nothing. Bold, raw, unapologetic streetwear for the rebels. Coming soon." />
+  <meta name="keywords" content="streetwear, South African fashion, Busted Child, coming soon" />
+  <meta name="author" content="Busted Child Clothing" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#2b2119" />
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bustedchild.co.za/" />
+  <meta property="og:title" content="Busted Child Clothing | Coming Soon" />
+  <meta property="og:description" content="The Best Out Of Nothing. Something bold is coming." />
+  <meta property="og:image" content="https://bustedchild.co.za/og-image.jpg" />
+  <meta property="og:site_name" content="Busted Child Clothing" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Busted Child Clothing | Coming Soon" />
+  <meta name="twitter:description" content="The Best Out Of Nothing. Something bold is coming." />
+  
+  <title>Busted Child Clothing · Coming Soon</title>
+  
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="LOGO.jpeg" type="image/jpeg" />
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #2b2119;
+      --accent: #b33c3c;
+      --white: #ffffff;
+    }
+    
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: var(--primary); 
+      color: var(--white); 
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+    }
+    
+    /* Background Pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(179,60,60,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(179,60,60,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    /* Grid Pattern Overlay */
+    .grid-pattern {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      animation: fadeInUp 1s ease;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Logo */
+    .logo {
+      width: 180px;
+      height: auto;
+      margin: 0 auto 2rem;
+      animation: pulse 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    
+    /* Badge */
+    .coming-soon-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: glow 2s ease-in-out infinite;
+    }
+    
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(179,60,60,0.3); }
+      50% { box-shadow: 0 0 40px rgba(179,60,60,0.6); }
+    }
+    
+    /* Headline */
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 4.5rem;
+      letter-spacing: -2px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    
+    .tagline {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      font-size: 1.5rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+    
+    .description {
+      font-size: 1.1rem;
+      color: #999;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* Countdown */
+    .countdown {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .countdown-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      min-width: 90px;
+    }
+    
+    .countdown-number {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 2.5rem;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    
+    .countdown-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+    }
+    
+    /* Subscribe Form */
+    .subscribe-form {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 450px;
+      margin: 0 auto 2rem;
+    }
+    
+    .subscribe-form input {
+      flex: 1;
+      padding: 0.9rem 1.5rem;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 50px;
+      background: rgba(255,255,255,0.05);
+      color: var(--white);
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    
+    .subscribe-form input::placeholder { color: #666; }
+    .subscribe-form input:focus { border-color: var(--accent); }
+    
+    .subscribe-form button {
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 50px;
+      background: var(--accent);
+      color: var(--white);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    
+    .subscribe-form button:hover { background: #8f2e2e; }
+    
+    /* Social Links */
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    
+    .social-links a {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+    
+    .social-links a:hover {
+      border-color: var(--accent);
+      color: var(--white);
+      background: var(--accent);
+    }
+    
+    /* Contact Info */
+    .contact-info {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+    
+    .contact-info a {
+      color: #888;
+      transition: color 0.2s;
+    }
+    
+    .contact-info a:hover { color: var(--white); }
+    
+    /* Footer */
+    .footer-text {
+      font-size: 0.75rem;
+      color: #555;
+      margin-top: 2rem;
+    }
+    
+    /* Success Message */
+    .success-message {
+      display: none;
+      color: #4caf50;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      animation: fadeInUp 0.3s ease;
+    }
+    
+    .success-message.show { display: block; }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.8rem; }
+      .tagline { font-size: 1.1rem; letter-spacing: 2px; }
+      .description { font-size: 0.95rem; }
+      .countdown { gap: 0.8rem; }
+      .countdown-item { padding: 0.8rem 1rem; min-width: 70px; }
+      .countdown-number { font-size: 1.8rem; }
+      .subscribe-form { flex-direction: column; }
+      .subscribe-form button { width: 100%; }
+      .logo { width: 140px; }
+    }
+    
+    @media (max-width: 480px) {
+      h1 { font-size: 2.2rem; letter-spacing: -1px; }
+      .countdown-item { min-width: 60px; padding: 0.7rem 0.8rem; }
+      .countdown-number { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<div class="grid-pattern"></div>
+
+<div class="content">
+  <!-- Logo -->
+  <img class="logo" src="LOGO.jpeg" alt="Busted Child Clothing" />
+  
+  <!-- Coming Soon Badge -->
+  <div class="coming-soon-badge">Coming Soon</div>
+  
+  <!-- Headline -->
+  <h1>BUSTED CHILD</h1>
+  <p class="tagline">The Best Out Of Nothing</p>
+  
+  <!-- Description -->
+  <p class="description">
+    We're building something bold, raw, and unapologetic. 
+    Premium streetwear for the rebels. Stay tuned — we launch soon.
+  </p>
+  
+  <!-- Countdown Timer -->
+  <div class="countdown">
+    <div class="countdown-item">
+      <div class="countdown-number" id="days">00</div>
+      <div class="countdown-label">Days</div>
+    </div>
+    <div class="countdown-item">
+      <div class="countdown-number" id="hours">00</div>
+      <div class="countdown-label">Hours</div>
+    </div>
+    <div class="countdown-item">
+      <div class="countdown-number" id="minutes">00</div>
+      <div class="countdown-label">Minutes</div>
+    </div>
+    <div class="countdown-item">
+      <div class="countdown-number" id="seconds">00</div>
+      <div class="countdown-label">Seconds</div>
+    </div>
+  </div>
+  
+  <!-- Subscribe Form -->
+  <form class="subscribe-form" id="subscribeForm">
+    <input type="email" placeholder="Enter your email for early access" required />
+    <button type="submit">Notify Me</button>
+  </form>
+  <div class="success-message" id="successMessage">
+    <i class="fas fa-check-circle"></i> You're on the list! We'll notify you when we launch.
+  </div>
+  
+  <!-- Social Links -->
+  <div class="social-links">
+    <a href="https://tiktok.com/@bustedchild" target="_blank" rel="noopener" aria-label="TikTok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+    <a href="https://instagram.com/bustedchild" target="_blank" rel="noopener" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://facebook.com/bustedchild" target="_blank" rel="noopener" aria-label="Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+  </div>
+  
+  <!-- Contact -->
+  <p class="contact-info">
+    <i class="fas fa-envelope"></i> 
+    <a href="mailto:bustedchildclothingza@gmail.com">bustedchildclothingza@gmail.com</a>
+    &nbsp;·&nbsp;
+    <i class="fas fa-phone"></i>
+    <a href="tel:+27632524838">063 252 4838</a>
+  </p>
+  <p class="contact-info">
+    <i class="fas fa-map-marker-alt"></i> 
+    343 Peter Mokaba Street, Lotus Gardens, Pretoria West
+  </p>
+  
+  <!-- Footer -->
+  <p class="footer-text">
+    &copy; 2024 BUSTED CHILD CLOTHING. All rights reserved. Built by BarkerTech Innovations.
+  </p>
+</div>
+
+<script>
+(function() {
+  // ===== COUNTDOWN TIMER =====
+  // Set launch date (change this to your actual launch date)
+  // Format: Year, Month (0-11), Day, Hour, Minute, Second
+  const launchDate = new Date(2025, 2, 1, 0, 0, 0); // March 1, 2025
+  
+  function updateCountdown() {
+    const now = new Date();
+    const diff = launchDate - now;
+    
+    if (diff <= 0) {
+      document.getElementById('days').textContent = '00';
+      document.getElementById('hours').textContent = '00';
+      document.getElementById('minutes').textContent = '00';
+      document.getElementById('seconds').textContent = '00';
+      return;
+    }
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+  }
+  
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+  
+  // ===== SUBSCRIBE FORM =====
+  document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const emailInput = this.querySelector('input');
+    const email = emailInput.value.trim();
+    
+    if (email) {
+      // Save to localStorage
+      const subscribers = JSON.parse(localStorage.getItem('bustedEarlyAccess') || '[]');
+      subscribers.push({
+        email: email,
+        date: new Date().toISOString(),
+        source: 'coming-soon-page'
+      });
+      localStorage.setItem('bustedEarlyAccess', JSON.stringify(subscribers));
+      
+      // Show success message
+      document.getElementById('successMessage').classList.add('show');
+      
+      // Clear input
+      emailInput.value = '';
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        document.getElementById('successMessage').classList.remove('show');
+      }, 5000);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
